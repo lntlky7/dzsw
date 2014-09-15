@@ -1,0 +1,83 @@
+﻿一、build ---1-*--- project ---1-*--- task
+
+
+二、Gradle的配置文件
+
+1、Gradle构建脚本（build.gradle）指定了一个项目和它的任务。
+2、Gradle属性文件（gradle.properties）用来配置构建属性。
+3、Gradle设置文件（gradle.settings）对于只有一个项目的构建而言是可选的，如果我们的构建中包含多于一个项目，那么它就是必须的，因为它描述了哪一个项目参与构建。每一个多项目的构建都必须在项目结构的根目录中加入一个设置文件。
+
+
+三、Gradle的命令
+
+gradle tasks //可运行任务及其描述的完整列表
+
+
+gradle assemble //项目打包所必须的任务集
+  :compileJava
+  :processResources 
+  :classes
+  :jar
+  :assemble
+
+gradle build //任务执行项目打包所必须的任务集，以及执行自动化测试。
+  :compileJava
+  :processResources 
+  :classes
+  :jar
+  :assemble
+  :compileTestJava 
+  :processTestResources 
+  :testClasses 
+  :test
+  :check 
+  :build
+
+
+
+四、Gradle支持以下仓库格式：
+
+1、Ivy仓库
+通过URL地址添加一个Ivy仓库
+repositories {
+    ivy {
+        url "http://ivy.petrikainulainen.net/repo"
+    }
+}
+
+通过本地文件系统地址添加一个Ivy仓库
+repositories {
+    ivy {       
+        url "../ivy-repo"
+    }
+}
+
+
+2、Maven仓库
+通过URL地址添加一个Maven仓库
+repositories {
+    maven {
+        url "http://maven.petrikainulainen.net/repo"
+    }
+}
+通过本地文件系统地址添加一个Maven仓库
+repositories {
+    maven {       
+        url "../maven-repo"
+    }
+}
+Gradle提供了三种“别名”供我们使用，它们分别是：
+a、mavenCentral()别名，表示依赖是从Central Maven 2 仓库中获取的。
+b、jcenter()别名，表示依赖是从Bintary’s JCenter Maven 仓库中获取的。
+c、mavenLocal()别名，表示依赖是从本地的Maven仓库中获取的。
+
+
+3、Flat directory仓库
+使用Flat Directory仓库
+repositories {
+    flatDir {
+        dirs 'libA', 'libB'
+    }
+}
+
+
