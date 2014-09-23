@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sf.sfjpa.db;
+package sf.sfjpa.reader;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import sf.sfjpa.db.JdbcDb;
 
 /**
  *

@@ -2,7 +2,8 @@ package sf.sfjpa;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sf.sfjpa.common.JdbcProp;
+import sf.sfjpa.common.IConnInfo;
+import sf.sfjpa.common.OracleConnInfo;
 import sf.sfjpa.db.JdbcDb;
 
 /**
@@ -12,10 +13,12 @@ import sf.sfjpa.db.JdbcDb;
 public class App {
 
     public static void main(String[] args) {
+        String oracleDbType = "oracle";
+        String mysqlDbType = "mysql";
         try {
-            JdbcProp jp = JdbcProp.getInstance();
-            jp.init();
-            JdbcDb.getInstance().init(jp.getDriverName(), jp.getUrl(), jp.getUserName(), jp.getUserPwd());
+            IConnInfo connInfo = new OracleConnInfo();
+            connInfo.loadConnInfo();
+            JdbcDb.getInstance().init(connInfo.getDriverName(), connInfo.getUrl(), connInfo.getUser(), connInfo.getPwd());
 
         } catch (Exception ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);

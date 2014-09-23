@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sf.sfjpa.db;
-
-import java.util.List;
+package sf.sfjpa.common;
 
 /**
  *
  * @author Administrator
  */
-public interface ITableNameReader {
-
-    public List<String> readerAllTableName() throws Exception;
+public interface IConnInfo {
+    public boolean loadConnInfo();
+    public String getDriverName();
+    public String getUrl();
+    public String getUser();
+    public String getPwd();
 }
