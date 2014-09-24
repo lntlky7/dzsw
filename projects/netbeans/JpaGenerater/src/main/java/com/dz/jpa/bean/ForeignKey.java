@@ -12,4 +12,5 @@ package com.dz.jpa.bean;
  */
 public class ForeignKey {
     
+    private String name;
 }
