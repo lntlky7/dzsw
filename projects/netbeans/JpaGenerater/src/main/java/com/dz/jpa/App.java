@@ -18,7 +18,7 @@ public class App {
         try {
             IConnInfo connInfo = new OracleConnInfo();
             connInfo.loadConnInfo();
-            JdbcDb.getInstance().init(connInfo.getDriverName(), connInfo.getUrl(), connInfo.getUser(), connInfo.getPwd());
+            JdbcDb.getInstance().init(connInfo.getDriverName(), connInfo.getUrl(), connInfo.getProps());
 
         } catch (Exception ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);

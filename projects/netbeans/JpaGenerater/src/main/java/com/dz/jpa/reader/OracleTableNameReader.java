@@ -13,7 +13,7 @@ import com.dz.jpa.db.JdbcDb;
 
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public class OracleTableNameReader implements ITableNameReader {
 

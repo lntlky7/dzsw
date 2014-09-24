@@ -11,7 +11,7 @@ import java.util.Properties;
 
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public class OracleConnInfo extends AbstractConnInfo {
 
@@ -27,8 +27,13 @@ public class OracleConnInfo extends AbstractConnInfo {
         p.getProperty(url);
         this.driverName = p.getProperty("jdbc.driverClass");
         this.url = p.getProperty("jdbc.jdbcUrl");
-        this.user = p.getProperty("jdbc.username");
-        this.pwd = p.getProperty("jdbc.password");
+        String remarksReporting = p.getProperty("jdbc.oracle.remarksReporting");
+        Properties jdbcProp = new Properties();
+        jdbcProp.setProperty("remarksReporting", remarksReporting);
+        jdbcProp.setProperty("user",  p.getProperty("jdbc.username"));
+        jdbcProp.setProperty("password", p.getProperty("jdbc.password"));
+//        this.user = p.getProperty("jdbc.username");
+//        this.pwd = p.getProperty("jdbc.password");
     }
     
 }

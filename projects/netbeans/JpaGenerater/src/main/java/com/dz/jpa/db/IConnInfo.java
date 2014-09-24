@@ -5,14 +5,19 @@
  */
 package com.dz.jpa.db;
 
+import java.util.Properties;
+
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public interface IConnInfo {
+
     public boolean loadConnInfo();
+
     public String getDriverName();
+
     public String getUrl();
-    public String getUser();
-    public String getPwd();
+
+    public Properties getProps();
 }

@@ -5,9 +5,11 @@
  */
 package com.dz.jpa.db;
 
+import java.util.Properties;
+
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public abstract class AbstractConnInfo implements IConnInfo {
 
@@ -15,9 +17,7 @@ public abstract class AbstractConnInfo implements IConnInfo {
 
     protected String url;
 
-    protected String user;
-
-    protected String pwd;
+    protected Properties props;
 
     protected boolean init() {
         boolean result = true;
@@ -44,20 +44,15 @@ public abstract class AbstractConnInfo implements IConnInfo {
         return this.url;
     }
 
-    public String getUser() {
-        return this.user;
-    }
-
-    public String getPwd() {
-        return this.pwd;
+    public Properties getProps() {
+        return this.props;
     }
 
     protected boolean isInited() {
         boolean result = false;
         if ((driverName != null && !"".equals(driverName))
                 && (url != null && !"".equals(url))
-                && (user != null && !"".equals(user))
-                && (pwd != null && !"".equals(pwd))) {
+                && props != null) {
             result = true;
         }
         return result;

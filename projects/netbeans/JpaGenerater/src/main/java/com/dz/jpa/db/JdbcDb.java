@@ -7,17 +7,19 @@ package com.dz.jpa.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public class JdbcDb {
 
     private String driverName;
     private String url;
-    private String userName;
-    private String userPwd;
+    private Properties props;
+//    private String userName;
+//    private String userPwd;
 
     private Connection conn;
 
@@ -33,16 +35,15 @@ public class JdbcDb {
 
     }
 
-    public void init(String driverName, String url, String userName, String userPwd) {
+    public void init(String driverName, String url, Properties props) {
         this.driverName = driverName;
         this.url = url;
-        this.userName = userName;
-        this.userPwd = userPwd;
+        this.props = props;
     }
 
     public void openConn() throws Exception {
         Class.forName(this.driverName);
-        conn = DriverManager.getConnection(url, userName, userPwd);
+        conn = DriverManager.getConnection(url, props);
     }
 
     public Connection getConn() {
