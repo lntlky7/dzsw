@@ -7,6 +7,7 @@ package com.dz.jpa.db;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URI;
 import java.util.Properties;
 
 /**
@@ -21,19 +22,16 @@ public class OracleConnInfo extends AbstractConnInfo {
 
     @Override
     protected void setValues() throws Exception {
-        String jdbcPropPath = System.getProperty("user.dir") + "oracle.properties";
+        String jdbcPropPath = new File(this.getClass().getResource("/").toURI()).getPath() + "\\oracle.properties";
         Properties p = new Properties();
         p.load(new FileInputStream(new File(jdbcPropPath)));
-        p.getProperty(url);
         this.driverName = p.getProperty("jdbc.driverClass");
         this.url = p.getProperty("jdbc.jdbcUrl");
         String remarksReporting = p.getProperty("jdbc.oracle.remarksReporting");
-        Properties jdbcProp = new Properties();
-        jdbcProp.setProperty("remarksReporting", remarksReporting);
-        jdbcProp.setProperty("user",  p.getProperty("jdbc.username"));
-        jdbcProp.setProperty("password", p.getProperty("jdbc.password"));
-//        this.user = p.getProperty("jdbc.username");
-//        this.pwd = p.getProperty("jdbc.password");
+        this.props = new Properties();
+        props.setProperty("remarksReporting", remarksReporting);
+        props.setProperty("user",  p.getProperty("jdbc.username"));
+        props.setProperty("password", p.getProperty("jdbc.password"));
     }
     
 }
