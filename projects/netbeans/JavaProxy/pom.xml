@@ -22,11 +22,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>dzsw</groupId>
-            <artifactId>cps-utils</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.1</version>
