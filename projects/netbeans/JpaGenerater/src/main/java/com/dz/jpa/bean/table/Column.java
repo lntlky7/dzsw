@@ -19,8 +19,8 @@ public class Column {
     private String remark;
     private String defaultValue;
 
-    private boolean pk;
-    private boolean fk;
+//    private boolean pk;
+//    private boolean fk;
 
     public String getName() {
         return name;
@@ -78,20 +78,20 @@ public class Column {
         this.defaultValue = defaultValue;
     }
 
-    public boolean isPk() {
-        return pk;
-    }
-
-    public void setPk(boolean pk) {
-        this.pk = pk;
-    }
-
-    public boolean isFk() {
-        return fk;
-    }
-
-    public void setFk(boolean fk) {
-        this.fk = fk;
-    }
+//    public boolean isPk() {
+//        return pk;
+//    }
+//
+//    public void setPk(boolean pk) {
+//        this.pk = pk;
+//    }
+//
+//    public boolean isFk() {
+//        return fk;
+//    }
+//
+//    public void setFk(boolean fk) {
+//        this.fk = fk;
+//    }
 
 }

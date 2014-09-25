@@ -13,38 +13,38 @@ import java.util.Map;
  */
 public class Table {
 
-    private Map<String, PrimaryKey> primaryKeyList;
+    private Map<String, PrimaryKey> primaryKeyMap;
 
-    private Map<String, ForeignKey> foreignKeyList;
+    private Map<String, ForeignKey> foreignKeyMap;
 
-    private Map<String, Column> columnList;
+    private Map<String, Column> columnMap;
 
     private String tableName;
 
     private String comment;
 
-    public Map<String, PrimaryKey> getPrimaryKeyList() {
-        return primaryKeyList;
+    public Map<String, PrimaryKey> getPrimaryKeyMap() {
+        return primaryKeyMap;
     }
 
-    public void setPrimaryKeyList(Map<String, PrimaryKey> primaryKeyList) {
-        this.primaryKeyList = primaryKeyList;
+    public void setPrimaryKeyMap(Map<String, PrimaryKey> primaryKeyMap) {
+        this.primaryKeyMap = primaryKeyMap;
     }
 
-    public Map<String, ForeignKey> getForeignKeyList() {
-        return foreignKeyList;
+    public Map<String, ForeignKey> getForeignKeyMap() {
+        return foreignKeyMap;
     }
 
-    public void setForeignKeyList(Map<String, ForeignKey> foreignKeyList) {
-        this.foreignKeyList = foreignKeyList;
+    public void setForeignKeyMap(Map<String, ForeignKey> foreignKeyMap) {
+        this.foreignKeyMap = foreignKeyMap;
     }
 
-    public Map<String, Column> getColumnList() {
-        return columnList;
+    public Map<String, Column> getColumnMap() {
+        return columnMap;
     }
 
-    public void setColumnList(Map<String, Column> columnList) {
-        this.columnList = columnList;
+    public void setColumnMap(Map<String, Column> columnMap) {
+        this.columnMap = columnMap;
     }
 
     public String getTableName() {

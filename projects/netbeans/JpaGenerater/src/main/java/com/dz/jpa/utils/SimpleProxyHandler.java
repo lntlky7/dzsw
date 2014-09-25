@@ -10,7 +10,7 @@ package com.dz.jpa.utils;
  *
  * @author sz
  */
-public class ProxyHandler<T> extends AbstractProxyHandler<T>{
+public class SimpleProxyHandler<T> extends AbstractProxyHandler<T>{
 
     @Override
     public void before() {

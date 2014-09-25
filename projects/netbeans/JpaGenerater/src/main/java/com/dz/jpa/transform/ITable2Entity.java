@@ -16,8 +16,5 @@ import java.util.List;
 public interface ITable2Entity {
 
     public List<Entity> transform(List<Table> tableList) throws Exception;
-    
-    public String entityNameStrategy(String tableName);
-    
-    public String entityPropertiesStrategy(String propsName);
+
 }

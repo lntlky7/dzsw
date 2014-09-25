@@ -36,13 +36,13 @@ public class OracleTableReader implements ITableReader {
             t.setComment(rs.getString("REMARKS"));
             // read column
             IColumnReader columnReader = new OracleColumnReader();
-            t.setColumnList(columnReader.readTableColumn(t.getTableName()));
+            t.setColumnMap(columnReader.readTableColumn(t.getTableName()));
             // read pk
             IPKReader pkReader = new OraclePKReader();
-            t.setPrimaryKeyList(pkReader.readTablePK(t.getTableName()));
+            t.setPrimaryKeyMap(pkReader.readTablePK(t.getTableName()));
             // read fk
             IFKReader fkReader = new OracleFKReader();
-            t.setForeignKeyList(fkReader.readTableFK(t.getTableName()));
+            t.setForeignKeyMap(fkReader.readTableFK(t.getTableName()));
             list.add(t);
         }
         return list;

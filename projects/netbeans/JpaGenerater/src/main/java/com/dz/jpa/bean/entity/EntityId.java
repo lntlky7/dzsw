@@ -5,17 +5,22 @@
  */
 package com.dz.jpa.bean.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public class EntityId {
 
     private List<Properties> entityIdList;
 
     private int type;
+
+    public EntityId() {
+        this.entityIdList = new ArrayList<Properties>();
+    }
 
     public List<Properties> getEntityIdList() {
         return entityIdList;

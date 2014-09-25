@@ -24,6 +24,8 @@ public class Entity {
 
     private EntityId entityId;
 
+    private String entityName;
+
     private List<Properties> propList;
 
     private List<EntityMapping> entityMappingList;
@@ -34,6 +36,14 @@ public class Entity {
 
     public void setEntityId(EntityId entityId) {
         this.entityId = entityId;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
     }
 
     public List<Properties> getPropList() {

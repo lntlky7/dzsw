@@ -5,7 +5,7 @@
  */
 package com.dz.jpa.reader;
 
-import com.dz.jpa.utils.ProxyHandler;
+import com.dz.jpa.utils.SimpleProxyHandler;
 
 /**
  *
@@ -14,7 +14,7 @@ import com.dz.jpa.utils.ProxyHandler;
 public class TableReaderProxyFactory {
 
     public static ITableReader getReader(String className) throws Exception {
-        ProxyHandler<ITableReader> handler = new ProxyHandler<ITableReader>();
+        SimpleProxyHandler<ITableReader> handler = new SimpleProxyHandler<ITableReader>();
         return handler.getProxy(TableReaderProxyFactory.class.getClassLoader(), className);
     }
 }
