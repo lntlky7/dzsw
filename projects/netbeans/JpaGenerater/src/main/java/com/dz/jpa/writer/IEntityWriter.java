@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.reader;
+package com.dz.jpa.writer;
 
+import com.dz.jpa.bean.entity.Entity;
 import java.util.List;
 
 /**
  *
  * @author sz
  */
-public interface ITableNameReader {
+public interface IEntityWriter {
 
-    public List<String> readerAllTableName() throws Exception;
+    public void writer(List<Entity> entityList);
 }

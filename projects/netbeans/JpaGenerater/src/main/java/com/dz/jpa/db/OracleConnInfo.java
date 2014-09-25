@@ -7,7 +7,6 @@ package com.dz.jpa.db;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.net.URI;
 import java.util.Properties;
 
 /**
@@ -27,11 +26,14 @@ public class OracleConnInfo extends AbstractConnInfo {
         p.load(new FileInputStream(new File(jdbcPropPath)));
         this.driverName = p.getProperty("jdbc.driverClass");
         this.url = p.getProperty("jdbc.jdbcUrl");
-        String remarksReporting = p.getProperty("jdbc.oracle.remarksReporting");
         this.props = new Properties();
+        String remarksReporting = p.getProperty("oracle.remarksReporting");
+        String user = p.getProperty("jdbc.username", "");
         props.setProperty("remarksReporting", remarksReporting);
-        props.setProperty("user",  p.getProperty("jdbc.username"));
+        props.setProperty("user",  user);
         props.setProperty("password", p.getProperty("jdbc.password"));
+        props.setProperty("schema", user.toUpperCase());
+        props.setProperty("tableNamePattern", p.getProperty("oracle.tableNamePattern"));
     }
     
 }

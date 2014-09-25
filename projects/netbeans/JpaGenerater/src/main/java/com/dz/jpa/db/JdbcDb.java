@@ -20,10 +20,14 @@ public class JdbcDb {
     private Properties props;
 //    private String userName;
 //    private String userPwd;
+    private String schema;
+
+    private String tableNamePattern;
 
     private Connection conn;
 
     static class JdbcDbHolder {
+
         public static JdbcDb instance = new JdbcDb();
     }
 
@@ -39,6 +43,8 @@ public class JdbcDb {
         this.driverName = driverName;
         this.url = url;
         this.props = props;
+        this.schema = props.getProperty("schema");
+        this.tableNamePattern = props.getProperty("tableNamePattern");
     }
 
     public void openConn() throws Exception {
@@ -56,4 +62,11 @@ public class JdbcDb {
         }
     }
 
+    public String getSchema() {
+        return schema;
+    }
+
+    public String getTableNamePattern() {
+        return this.tableNamePattern;
+    }
 }

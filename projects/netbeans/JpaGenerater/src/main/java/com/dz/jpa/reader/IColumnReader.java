@@ -6,10 +6,14 @@
 
 package com.dz.jpa.reader;
 
+import com.dz.jpa.bean.table.Column;
+import java.util.Map;
+
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public interface IColumnReader {
     
+    public Map<String, Column> readTableColumn(String tableName) throws Exception;
 }

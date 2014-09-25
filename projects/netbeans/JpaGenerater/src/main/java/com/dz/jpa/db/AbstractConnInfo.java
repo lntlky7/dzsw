@@ -47,7 +47,7 @@ public abstract class AbstractConnInfo implements IConnInfo {
     public Properties getProps() {
         return this.props;
     }
-
+    
     protected boolean isInited() {
         boolean result = false;
         if ((driverName != null && !"".equals(driverName))

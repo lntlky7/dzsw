@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.bean;
+package com.dz.jpa.bean.table;
 
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -6,10 +6,15 @@
 
 package com.dz.jpa.reader;
 
+import com.dz.jpa.bean.table.ForeignKey;
+import java.util.Map;
+
 /**
  *
- * @author Administrator
+ * @author sz
  */
 public interface IFKReader {
     
+    public Map<String, ForeignKey> readTableFK(String tableName) throws Exception;
+            
 }
