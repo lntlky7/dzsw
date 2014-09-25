@@ -1,12 +1,10 @@
-package org.gradle;
+package com.dzsw.utils;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-
-import com.dzsw.utils.FileUtils;
 
 public class JarLoader extends URLClassLoader {
 
