@@ -28,7 +28,7 @@ public interface ITable2EntityStrategy {
 
     public List<Properties> entityIdStrategy(PrimaryKey[] pks, Column[] cols);
 
-    public EntityMapping mappingManyStrategy(Entity entity, ForeignKey fk, Map<String, Table> tableMap);
+    public EntityMapping mappingManyStrategy(ForeignKey fk, Column col, Map<String, Table> tableMap);
 
-    public EntityMapping mappingOneStrategy(Entity entity, Map<String, Table> tableMap);
+    public EntityMapping mappingOneStrategy(Entity entity, Properties prop, Map<String, Table> tableMap);
 }

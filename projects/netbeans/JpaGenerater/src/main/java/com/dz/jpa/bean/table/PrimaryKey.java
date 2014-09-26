@@ -12,9 +12,9 @@ package com.dz.jpa.bean.table;
 public class PrimaryKey {
 
     private String pkName;
-    private String masterTableName;
+    private String masterTable;
     private String fkName;
-    private String slaveTableName;
+    private String slaveTable;
     private int sort;
     private boolean referenced;
 
@@ -26,12 +26,12 @@ public class PrimaryKey {
         this.pkName = pkName;
     }
 
-    public String getMasterTableName() {
-        return masterTableName;
+    public String getMasterTable() {
+        return masterTable;
     }
 
-    public void setMasterTableName(String masterTableName) {
-        this.masterTableName = masterTableName;
+    public void setMasterTable(String masterTable) {
+        this.masterTable = masterTable;
     }
 
     public String getFkName() {
@@ -42,12 +42,12 @@ public class PrimaryKey {
         this.fkName = fkName;
     }
 
-    public String getSlaveTableName() {
-        return slaveTableName;
+    public String getSlaveTable() {
+        return slaveTable;
     }
 
-    public void setSlaveTableName(String slaveTableName) {
-        this.slaveTableName = slaveTableName;
+    public void setSlaveTable(String slaveTable) {
+        this.slaveTable = slaveTable;
     }
 
     public int getSort() {

@@ -72,11 +72,16 @@ public class SimpleTable2Entity implements ITable2Entity {
             Entity entity = entityMap.get(t.getTableName());
             List<EntityMapping> mappingList = new ArrayList<EntityMapping>();
             // one
-            EntityMapping mapping = strategy.mappingOneStrategy(entity, tableMap);
-            mappingList.add(mapping);
+            for (Properties prop : entity.getEntityId().getEntityIdList()) {
+                EntityMapping mapping = strategy.mappingOneStrategy(entity, prop, tableMap);
+                if (mapping != null) {
+                    mappingList.add(mapping);
+                }
+            }
             // many
             for (ForeignKey fk : t.getForeignKeyMap().values()) {
-                mapping = strategy.mappingManyStrategy(entity, fk, tableMap);
+                Column col = t.getColumnMap().get(fk.getFkName());
+                EntityMapping mapping = strategy.mappingManyStrategy(fk, col, tableMap);
                 mappingList.add(mapping);
             }
             entity.setEntityMappingList(mappingList);

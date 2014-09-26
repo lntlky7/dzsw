@@ -31,7 +31,7 @@ public class OraclePKReader implements IPKReader {
             rs = metaData.getPrimaryKeys(null, null, tableName);
             while (rs.next()) {
                 PrimaryKey pk = new PrimaryKey();
-                pk.setMasterTableName(rs.getString("TABLE_NAME"));
+                pk.setMasterTable(rs.getString("TABLE_NAME"));
                 pk.setPkName(rs.getString("COLUMN_NAME"));
                 pk.setSort(rs.getInt("KEY_SEQ"));
                 pkMap.put(pk.getPkName(), pk);
@@ -41,7 +41,7 @@ public class OraclePKReader implements IPKReader {
             while (rs.next()) {
                 String pkName = rs.getString("PKCOLUMN_NAME");
                 PrimaryKey pk = pkMap.get(pkName);
-                pk.setSlaveTableName(rs.getString("FKTABLE_NAME"));
+                pk.setSlaveTable(rs.getString("FKTABLE_NAME"));
                 pk.setFkName(rs.getString("FKCOLUMN_NAME"));
                 pk.setReferenced(true);
             }

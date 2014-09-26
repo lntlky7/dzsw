@@ -22,11 +22,11 @@ import java.util.Map;
  * @author sz
  */
 public class SimpleT2EStrategy implements ITable2EntityStrategy {
-
+    
     public String entityNameStrategy(String tableName) {
         return formatClassName(tableName, "_");
     }
-
+    
     public Properties entityPropertiesStrategy(Column col) {
         Properties prop = new Properties();
         prop.setName(formatFieldName(col.getName(), "_"));
@@ -37,7 +37,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         prop.setComment(col.getRemark());
         return prop;
     }
-
+    
     public List<Properties> entityIdStrategy(PrimaryKey[] pks, Column[] cols) {
         List<Properties> propList = new ArrayList<Properties>();
         for (int i = 0; i < pks.length; i++) {
@@ -48,40 +48,52 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         }
         return propList;
     }
-
-    public EntityMapping mappingOneStrategy(Entity entity, Map<String, Table> tableMap) {
-        EntityMapping mapping = new EntityMapping();
+    
+    public EntityMapping mappingOneStrategy(Entity entity, Properties prop, Map<String, Table> tableMap) {
+        EntityMapping mapping = null;
         // 设置映射类型
-
-        mapping.setMappingType(Entity.MAPPING_ONE_TO_MANY);
-        // 根据类型设置映射信息
-        switch (1) {
-            case Entity.MAPPING_ONE_TO_ONE:
-                break;
-            case Entity.MAPPING_ONE_TO_MANY:
-                mapping.setSlaveClass(null);
-                mapping.setSlaveTable(null);
-                mapping.setJoinColumns(null);
-                break;
+        Table masterTable = tableMap.get(entity.getTableName());
+        PrimaryKey pk = masterTable.getPrimaryKeyMap().get(prop.getColumnName());
+        if (pk.isReferenced()) {
+            mapping = new EntityMapping();
+            Table slaveTable = tableMap.get(pk.getSlaveTable());
+            if (slaveTable.isMidTable()) {// many to many
+                mapping.setMappingType(Entity.MAPPING_MANY_TO_MANY);
+                ForeignKey otherFK = null;
+                for (ForeignKey slaveTableFK : slaveTable.getForeignKeyMap().values()) {
+                    if (!pk.getFkName().equals(slaveTableFK.getFkName())) {
+                        otherFK = slaveTableFK;
+                    }
+                }
+                if (otherFK != null) {
+                    mapping.setSlaveClass(formatClassName(otherFK.getMasterTable(), "_"));
+                    mapping.setSlaveTable(otherFK.getMasterTable());
+                    mapping.setJoinColumns(pk.getFkName());
+                    mapping.setInverseJoinColumns(otherFK.getFkName());
+                    mapping.setMidTabel(slaveTable.getTableName());
+                }
+            } else {// one to many
+                mapping.setMappingType(Entity.MAPPING_ONE_TO_MANY);
+                mapping.setSlaveClass(formatClassName(pk.getSlaveTable(), "_"));
+                mapping.setSlaveTable(pk.getSlaveTable());
+                mapping.setJoinColumns(pk.getFkName());
+            }
         }
         return mapping;
     }
-
-    public EntityMapping mappingManyStrategy(Entity entity, ForeignKey fk, Map<String, Table> tableMap) {
+    
+    public EntityMapping mappingManyStrategy(ForeignKey fk, Column col, Map<String, Table> tableMap) {
         EntityMapping mapping = new EntityMapping();
-        mapping.setProp(entityPropertiesStrategy(null));
+        mapping.setProp(entityPropertiesStrategy(col));
         // 设置映射类型
-
+        mapping.setMappingType(Entity.MAPPING_MANY_TO_ONE);
         // 根据类型设置映射信息
-        switch (1) {
-            case Entity.MAPPING_MANY_TO_ONE:
-                break;
-            case Entity.MAPPING_MANY_TO_MANY:
-                break;
-        }
+        mapping.setMasterTable(fk.getMasterTable());
+        mapping.setMasterClass(formatClassName(fk.getMasterTable(), "_"));
+        mapping.setJoinColumns(fk.getFkName());
         return mapping;
     }
-
+    
     public String formatClassName(String tableName, String split) {
         String[] tmp = tableName.toLowerCase().split(split);
         StringBuilder sb = new StringBuilder();
@@ -93,7 +105,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         }
         return sb.toString();
     }
-
+    
     public String formatFieldName(String fieldName, String split) {
         String[] tmp = fieldName.toLowerCase().split(split);
         StringBuilder sb = new StringBuilder();
@@ -108,7 +120,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         }
         return sb.toString();
     }
-
+    
     public String formatFieldMethod(String methodName, String fieldName, String split) {
         String[] tmp = fieldName.toLowerCase().split(split);
         StringBuilder sb = new StringBuilder();
