@@ -14,7 +14,9 @@ import com.dz.jpa.bean.table.ForeignKey;
 import com.dz.jpa.bean.table.PrimaryKey;
 import com.dz.jpa.bean.table.Table;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -22,17 +24,21 @@ import java.util.List;
  */
 public class SimpleTable2Entity implements ITable2Entity {
 
-    public List<Entity> transform(List<Table> tableList) throws Exception {
+    public Map<String, Entity> transform(Map<String, Table> tableMap) throws Exception {
         // 创建Entity列表
-        List<Entity> entityList = new ArrayList<Entity>();
+        Map<String, Entity> entityMap = new HashMap<String, Entity>();
         // 实例化生成策略
         ITable2EntityStrategy strategy = StrategyProxyFactory.getStrategy("");
         // 循环table list处理转换
-        for (Table t : tableList) {
+        for (Table t : tableMap.values()) {
+            if (t.isMidTable()) {
+                continue;
+            }
             // 实例化Entity对象
             Entity entity = new Entity();
             // 处理表名
             entity.setEntityName(strategy.entityNameStrategy(t.getTableName()));
+            entity.setTableName(t.getTableName());
             // 处理PK
             EntityId entityId = new EntityId();
             int i = 0;
@@ -41,32 +47,42 @@ public class SimpleTable2Entity implements ITable2Entity {
             Column[] cols = new Column[size];
             for (PrimaryKey pk : t.getPrimaryKeyMap().values()) {
                 pks[i] = pk;
-                cols[i] = t.getColumnMap().get(pk.getName());
-                t.getColumnMap().remove(pk.getName());
+                cols[i] = t.getColumnMap().get(pk.getPkName());
                 i++;
             }
             entityId.setEntityIdList(strategy.entityIdStrategy(pks, cols));
             entity.setEntityId(entityId);
-            // 处理FK
-            List<EntityMapping> mappingList = new ArrayList<EntityMapping>();
-            for (ForeignKey fk : t.getForeignKeyMap().values()) {
-                EntityMapping mapping = strategy.entityMappingStrategy(fk, t.getColumnMap().get(fk.getFkName()));
-                t.getColumnMap().remove(fk.getFkName());
-                mappingList.add(mapping);
-            }
-            entity.setEntityMappingList(mappingList);
             // 处理列
             List<Properties> propList = new ArrayList<Properties>();
             for (Column c : t.getColumnMap().values()) {
-                Properties p = strategy.entityPropertiesStrategy(c);
-                propList.add(p);
+                if (!t.getPrimaryKeyMap().containsKey(c.getName()) && !t.getForeignKeyMap().containsKey(c.getName())) {
+                    Properties p = strategy.entityPropertiesStrategy(c);
+                    propList.add(p);
+                }
             }
             entity.setPropList(propList);
             // 将Entity对象装入Entity列表
-            entityList.add(entity);
+            entityMap.put(t.getTableName(), entity);
+        }
+        // 处理类的映射
+        for (Table t : tableMap.values()) {
+            if (t.isMidTable()) {
+                continue;
+            }
+            Entity entity = entityMap.get(t.getTableName());
+            List<EntityMapping> mappingList = new ArrayList<EntityMapping>();
+            // one
+            EntityMapping mapping = strategy.mappingOneStrategy(entity, tableMap);
+            mappingList.add(mapping);
+            // many
+            for (ForeignKey fk : t.getForeignKeyMap().values()) {
+                mapping = strategy.mappingManyStrategy(entity, fk, tableMap);
+                mappingList.add(mapping);
+            }
+            entity.setEntityMappingList(mappingList);
         }
         // 返回结果
-        return entityList;
+        return entityMap;
     }
 
 }

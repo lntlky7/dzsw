@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.reader;
 
-import com.dz.jpa.bean.table.Table;
-import java.util.Map;
+package com.dz.jpa.transform;
 
 /**
  *
  * @author sz
  */
-public interface ITableReader {
-
-    public Map<String, Table> readTable() throws Exception;
+public interface IDialect {
+    
+    public String getJavaType(String typeName);
+    
+//    public String getJaveType(int type);
 }

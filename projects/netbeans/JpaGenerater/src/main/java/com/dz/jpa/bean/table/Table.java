@@ -23,6 +23,8 @@ public class Table {
 
     private String comment;
 
+    private boolean midTable;
+
     public Map<String, PrimaryKey> getPrimaryKeyMap() {
         return primaryKeyMap;
     }
@@ -61,6 +63,14 @@ public class Table {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isMidTable() {
+        return midTable;
+    }
+
+    public void setMidTable(boolean midTable) {
+        this.midTable = midTable;
     }
 
 }

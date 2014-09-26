@@ -19,7 +19,7 @@ import java.util.Map;
  * @author sz
  */
 public class OraclePKReader implements IPKReader {
-
+    
     public Map<String, PrimaryKey> readTablePK(String tableName) throws Exception {
         Map<String, PrimaryKey> pkMap = new HashMap<String, PrimaryKey>();
         DatabaseMetaData metaData = null;
@@ -31,9 +31,19 @@ public class OraclePKReader implements IPKReader {
             rs = metaData.getPrimaryKeys(null, null, tableName);
             while (rs.next()) {
                 PrimaryKey pk = new PrimaryKey();
-                pk.setName(rs.getString("TABLE_NAME"));
+                pk.setMasterTableName(rs.getString("TABLE_NAME"));
+                pk.setPkName(rs.getString("COLUMN_NAME"));
                 pk.setSort(rs.getInt("KEY_SEQ"));
-                pkMap.put(pk.getName(), pk);
+                pkMap.put(pk.getPkName(), pk);
+            }
+            rs.close();
+            rs = metaData.getExportedKeys(null, null, tableName);
+            while (rs.next()) {
+                String pkName = rs.getString("PKCOLUMN_NAME");
+                PrimaryKey pk = pkMap.get(pkName);
+                pk.setSlaveTableName(rs.getString("FKTABLE_NAME"));
+                pk.setFkName(rs.getString("FKCOLUMN_NAME"));
+                pk.setReferenced(true);
             }
         } catch (Exception e) {
             throw e;
@@ -44,5 +54,5 @@ public class OraclePKReader implements IPKReader {
         }
         return pkMap;
     }
-
+    
 }

@@ -16,6 +16,8 @@ import com.dz.jpa.reader.IPKReader;
 import com.dz.jpa.reader.ITableReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -23,8 +25,8 @@ import java.sql.DatabaseMetaData;
  */
 public class OracleTableReader implements ITableReader {
 
-    public List<Table> readTable() throws Exception {
-        List<Table> list = new ArrayList<Table>();
+    public Map<String, Table> readTable() throws Exception {
+        Map<String, Table> map = new HashMap<String, Table>();
         Connection conn = JdbcDb.getInstance().getConn();
         DatabaseMetaData metaData = conn.getMetaData();
         String schema = JdbcDb.getInstance().getSchema();
@@ -43,9 +45,15 @@ public class OracleTableReader implements ITableReader {
             // read fk
             IFKReader fkReader = new OracleFKReader();
             t.setForeignKeyMap(fkReader.readTableFK(t.getTableName()));
-            list.add(t);
+            // is mid table
+            if (t.getColumnMap().size() == t.getForeignKeyMap().size()) {
+                t.setMidTable(true);
+            } else {
+                t.setMidTable(false);
+            }
+            map.put(t.getTableName(), t);
         }
-        return list;
+        return map;
     }
 
 }

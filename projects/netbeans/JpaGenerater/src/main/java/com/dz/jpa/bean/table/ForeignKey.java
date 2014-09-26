@@ -12,9 +12,9 @@ package com.dz.jpa.bean.table;
 public class ForeignKey {
 
     private String pkName;
-    private String masterTableName;
+    private String masterTable;
     private String fkName;
-    private String slaveTableName;
+    private String slaveTable;
 
     public String getPkName() {
         return pkName;
@@ -22,14 +22,6 @@ public class ForeignKey {
 
     public void setPkName(String pkName) {
         this.pkName = pkName;
-    }
-
-    public String getMasterTableName() {
-        return masterTableName;
-    }
-
-    public void setMasterTableName(String masterTableName) {
-        this.masterTableName = masterTableName;
     }
 
     public String getFkName() {
@@ -40,12 +32,20 @@ public class ForeignKey {
         this.fkName = fkName;
     }
 
-    public String getSlaveTableName() {
-        return slaveTableName;
+    public String getMasterTable() {
+        return masterTable;
     }
 
-    public void setSlaveTableName(String slaveTableName) {
-        this.slaveTableName = slaveTableName;
+    public void setMasterTable(String masterTable) {
+        this.masterTable = masterTable;
+    }
+
+    public String getSlaveTable() {
+        return slaveTable;
+    }
+
+    public void setSlaveTable(String slaveTable) {
+        this.slaveTable = slaveTable;
     }
 
 }

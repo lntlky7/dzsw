@@ -13,18 +13,20 @@ import java.util.List;
  */
 public class Entity {
 
-    public static int MAPPING_ONE_TO_ONE = 1;
-    public static int MAPPING_ONE_TO_MANY = 2;
-    public static int MAPPING_MANY_TO_ONE = 3;
-    public static int MAPPING_MANY_TO_MANY = 4;
+    public final static int MAPPING_ONE_TO_ONE = 1;
+    public final static int MAPPING_ONE_TO_MANY = 2;
+    public final static int MAPPING_MANY_TO_ONE = 3;
+    public final static int MAPPING_MANY_TO_MANY = 4;
 
-    public static int ID_GENERATION_STRATEGY_GUID = 1;
-    public static int ID_GENERATION_STRATEGY_AUTO = 2;
-    public static int ID_GENERATION_STRATEGY_SEQUENCE = 3;
+    public final static int ID_GENERATION_STRATEGY_GUID = 1;
+    public final static int ID_GENERATION_STRATEGY_AUTO = 2;
+    public final static int ID_GENERATION_STRATEGY_SEQUENCE = 3;
 
     private EntityId entityId;
 
     private String entityName;
+
+    private String tableName;
 
     private List<Properties> propList;
 
@@ -60,6 +62,14 @@ public class Entity {
 
     public void setEntityMappingList(List<EntityMapping> entityMappingList) {
         this.entityMappingList = entityMappingList;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
 }

@@ -8,7 +8,7 @@ import com.dz.jpa.db.OracleConnInfo;
 import com.dz.jpa.db.JdbcDb;
 import com.dz.jpa.reader.ITableReader;
 import com.dz.jpa.reader.TableReaderProxyFactory;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -23,8 +23,8 @@ public class App {
             JdbcDb.getInstance().init(connInfo.getDriverName(), connInfo.getUrl(), connInfo.getProps());
             JdbcDb.getInstance().openConn();
             ITableReader nameReader = TableReaderProxyFactory.getReader("com.dz.jpa.reader.impl.OracleTableReader");
-            List<Table> tableNameList = nameReader.readTable();
-            for (Table t : tableNameList) {
+            Map<String, Table> tableMap = nameReader.readTable();
+            for (Table t : tableMap.values()) {
                 System.out.println(t.getTableName());
             }
         } catch (Exception ex) {

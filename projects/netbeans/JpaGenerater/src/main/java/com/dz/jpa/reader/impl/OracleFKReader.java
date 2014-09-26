@@ -31,8 +31,8 @@ public class OracleFKReader implements IFKReader {
             rs = metaData.getImportedKeys(null, null, tableName);
             while (rs.next()) {
                 ForeignKey fk = new ForeignKey();
-                fk.setMasterTableName(rs.getString("PKTABLE_NAME"));
-                fk.setSlaveTableName(rs.getString("FKTABLE_NAME"));
+                fk.setMasterTable(rs.getString("PKTABLE_NAME"));
+                fk.setSlaveTable(rs.getString("FKTABLE_NAME"));
                 fk.setPkName(rs.getString("PKCOLUMN_NAME"));
                 fk.setFkName(rs.getString("FKCOLUMN_NAME"));
                 fkMap.put(fk.getFkName(), fk);

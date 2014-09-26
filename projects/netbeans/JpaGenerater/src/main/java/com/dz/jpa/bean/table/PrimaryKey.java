@@ -11,15 +11,43 @@ package com.dz.jpa.bean.table;
  */
 public class PrimaryKey {
 
-    private String name;
+    private String pkName;
+    private String masterTableName;
+    private String fkName;
+    private String slaveTableName;
     private int sort;
+    private boolean referenced;
 
-    public String getName() {
-        return name;
+    public String getPkName() {
+        return pkName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPkName(String pkName) {
+        this.pkName = pkName;
+    }
+
+    public String getMasterTableName() {
+        return masterTableName;
+    }
+
+    public void setMasterTableName(String masterTableName) {
+        this.masterTableName = masterTableName;
+    }
+
+    public String getFkName() {
+        return fkName;
+    }
+
+    public void setFkName(String fkName) {
+        this.fkName = fkName;
+    }
+
+    public String getSlaveTableName() {
+        return slaveTableName;
+    }
+
+    public void setSlaveTableName(String slaveTableName) {
+        this.slaveTableName = slaveTableName;
     }
 
     public int getSort() {
@@ -28,6 +56,14 @@ public class PrimaryKey {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public boolean isReferenced() {
+        return referenced;
+    }
+
+    public void setReferenced(boolean referenced) {
+        this.referenced = referenced;
     }
 
 }

@@ -7,7 +7,7 @@ package com.dz.jpa.transform;
 
 import com.dz.jpa.bean.entity.Entity;
 import com.dz.jpa.bean.table.Table;
-import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface ITable2Entity {
 
-    public List<Entity> transform(List<Table> tableList) throws Exception;
+    public Map<String, Entity> transform(Map<String, Table> tableMap) throws Exception;
 
 }
