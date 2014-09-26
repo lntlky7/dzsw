@@ -28,7 +28,7 @@ public class SimpleTable2Entity implements ITable2Entity {
         // 创建Entity列表
         Map<String, Entity> entityMap = new HashMap<String, Entity>();
         // 实例化生成策略
-        ITable2EntityStrategy strategy = StrategyProxyFactory.getStrategy("");
+        ITable2EntityStrategy strategy = StrategyProxyFactory.getStrategy("com.dz.jpa.transform.SimpleT2EStrategy");
         // 循环table list处理转换
         for (Table t : tableMap.values()) {
             if (t.isMidTable()) {

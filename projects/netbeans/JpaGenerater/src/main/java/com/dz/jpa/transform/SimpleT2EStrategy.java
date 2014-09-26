@@ -6,7 +6,6 @@
 package com.dz.jpa.transform;
 
 import com.dz.jpa.bean.entity.Entity;
-import com.dz.jpa.bean.entity.EntityId;
 import com.dz.jpa.bean.entity.EntityMapping;
 import com.dz.jpa.bean.entity.Properties;
 import com.dz.jpa.bean.table.Column;
