@@ -20,6 +20,7 @@ import java.util.Map;
  */
 public class OracleFKReader implements IFKReader {
 
+    @Override
     public Map<String, ForeignKey> readTableFK(String tableName) throws Exception {
         Map<String, ForeignKey> fkMap = new HashMap<String, ForeignKey>();
         DatabaseMetaData metaData = null;

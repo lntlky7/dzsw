@@ -23,11 +23,11 @@ public interface ITable2EntityStrategy {
 
     public String entityNameStrategy(String tableName);
 
-    public Properties entityPropertiesStrategy(Column col);
+    public Properties entityPropertiesStrategy(Column col) throws Exception;
 
-    public List<Properties> entityIdStrategy(PrimaryKey[] pks, Column[] cols);
+    public List<Properties> entityIdStrategy(PrimaryKey[] pks, Column[] cols) throws Exception;
 
-    public EntityMapping mappingManyStrategy(ForeignKey fk, Column col, Map<String, Table> tableMap);
+    public EntityMapping mappingManyStrategy(ForeignKey fk, Column col, Map<String, Table> tableMap) throws Exception;
 
     public EntityMapping mappingOneStrategy(Entity entity, Properties prop, Map<String, Table> tableMap);
 }

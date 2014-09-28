@@ -1,0 +1,73 @@
+package ${daoPackage};;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.rgsc.android.policeofficer.bean.${className};
+import com.rgsc.android.policeofficer.common.db.POBaseDao;
+
+/**
+ * Description ${description}
+ * CreateDate ${createTime}
+ * @author ${author}
+ */
+ public class ${className}Db extends POBaseDao {
+ 
+ 	private static final String SQL_INSERT = "INSERT INTO ${tableName}(<#list fieldList as field>${field.fieldName}<#if field_index != fieldList?size - 1>,</#if></#list>) VALUES(<#list fieldList as field>?<#if field_index != fieldList?size - 1>,</#if></#list>)";
+ 	private static final String SQL_UPDATE = "UPDATE ${tableName} SET <#list fieldList as field>${field.fieldName}=?<#if field_index != fieldList?size - 1>,</#if></#list> WHERE";
+ 	private static final String SQL_SELECT = "SELECT <#list fieldList as field>${field.fieldName}<#if field_index != fieldList?size - 1>,</#if></#list> FROM ${tableName} WHERE LIMIT ?,?";
+ 	private static final String SQL_DELETE = "DELETE FROM ${tableName} WHERE ";
+ 	private static final String SQL_ALL_COUNT = "SELECT COUNT(*) ALLCOUNT FROM ${tableName}";
+ 
+ 	public ${className}Db(Context context){
+		super(context); 	
+ 	}
+
+ 	public ${className} insert() {
+ 		SQLiteDatabase db = getWritableDatabase();
+ 		db.execSQL(SQL_INSERT, new Object[]{});
+ 		return null;
+ 	}
+ 	
+ 	public ${className} update() {
+ 		SQLiteDatabase db = getWritableDatabase();
+ 		db.execSQL(SQL_UPDATE, new Object[]{});
+ 		return null;
+ 	}
+ 	
+ 	public boolean delete() {
+ 		SQLiteDatabase db = getWritableDatabase();
+ 		db.execSQL(SQL_DELETE, new Object[]{});
+ 		return false;
+ 	}
+ 	
+ 	public List<${className}> select() {
+ 		SQLiteDatabase db = getReadableDatabase();
+ 		Cursor c = db.rawQuery(SQL_SELECT, new String[]{});
+ 		List<${className}> list = new ArrayList<${className}>();
+ 		if (c.moveToFirst()) {
+ 			do {
+ 				${className} object = new ${className}();
+ 				<#list fieldList as field>
+					object.${field.methodSetName}(c.getString(c.getColumnIndex("${field.fieldName}")));
+				</#list>
+ 				list.add(object);
+ 			} while (c.moveToNext());
+ 		}
+ 		return list;
+ 	}
+ 	
+ 	public int getAllCount() {
+ 		SQLiteDatabase db = getReadableDatabase();
+ 		Cursor c = db.rawQuery(SQL_ALL_COUNT, new String[]{});
+ 		int count = 0;
+ 		if (c.moveToFirst()) {
+ 			count = c.getInt(c.getColumnIndex("ALLCOUNT"));
+ 		}
+ 		return count;
+ 	}
+ }

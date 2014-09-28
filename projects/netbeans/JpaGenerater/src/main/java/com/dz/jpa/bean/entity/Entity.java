@@ -5,6 +5,8 @@
  */
 package com.dz.jpa.bean.entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +24,10 @@ public class Entity {
     public final static int ID_GENERATION_STRATEGY_AUTO = 2;
     public final static int ID_GENERATION_STRATEGY_SEQUENCE = 3;
 
+    private String packagePrefix;
+
+    private String comment;
+
     private EntityId entityId;
 
     private String entityName;
@@ -31,6 +37,10 @@ public class Entity {
     private List<Properties> propList;
 
     private List<EntityMapping> entityMappingList;
+
+    private String createDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+    private String author = "adminstrator";
 
     public EntityId getEntityId() {
         return entityId;
@@ -70,6 +80,38 @@ public class Entity {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public String getPackagePrefix() {
+        return packagePrefix;
+    }
+
+    public void setPackagePrefix(String packagePrefix) {
+        this.packagePrefix = packagePrefix;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
 }

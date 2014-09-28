@@ -20,6 +20,7 @@ import java.util.Map;
  */
 public class OraclePKReader implements IPKReader {
     
+    @Override
     public Map<String, PrimaryKey> readTablePK(String tableName) throws Exception {
         Map<String, PrimaryKey> pkMap = new HashMap<String, PrimaryKey>();
         DatabaseMetaData metaData = null;

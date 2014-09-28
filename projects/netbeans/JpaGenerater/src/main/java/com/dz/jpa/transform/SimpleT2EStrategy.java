@@ -5,6 +5,7 @@
  */
 package com.dz.jpa.transform;
 
+import com.dz.jpa.Cache;
 import com.dz.jpa.bean.entity.Entity;
 import com.dz.jpa.bean.entity.EntityMapping;
 import com.dz.jpa.bean.entity.Properties;
@@ -12,6 +13,7 @@ import com.dz.jpa.bean.table.Column;
 import com.dz.jpa.bean.table.ForeignKey;
 import com.dz.jpa.bean.table.PrimaryKey;
 import com.dz.jpa.bean.table.Table;
+import com.dz.jpa.utils.SysUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,23 +23,28 @@ import java.util.Map;
  * @author sz
  */
 public class SimpleT2EStrategy implements ITable2EntityStrategy {
-    
+
+    @Override
     public String entityNameStrategy(String tableName) {
         return formatClassName(tableName, "_");
     }
-    
-    public Properties entityPropertiesStrategy(Column col) {
+
+    @Override
+    public Properties entityPropertiesStrategy(Column col) throws Exception {
+        IDialect dialect = DialectProxyFactory.getDialect(Cache.getInstance().getSetting().getDialect());
         Properties prop = new Properties();
         prop.setName(formatFieldName(col.getName(), "_"));
         prop.setColumnName(col.getName());
         prop.setType(col.getType());
-        prop.setTypeName(col.getTypeName());
+        String typeName = dialect.getJavaType(col.getTypeName());
+        prop.setTypeName(typeName);
         prop.setLength(col.getLength());
         prop.setComment(col.getRemark());
         return prop;
     }
-    
-    public List<Properties> entityIdStrategy(PrimaryKey[] pks, Column[] cols) {
+
+    @Override
+    public List<Properties> entityIdStrategy(PrimaryKey[] pks, Column[] cols) throws Exception {
         List<Properties> propList = new ArrayList<Properties>();
         for (int i = 0; i < pks.length; i++) {
 //            PrimaryKey pk = pks[i];
@@ -47,7 +54,8 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         }
         return propList;
     }
-    
+
+    @Override
     public EntityMapping mappingOneStrategy(Entity entity, Properties prop, Map<String, Table> tableMap) {
         EntityMapping mapping = null;
         // 设置映射类型
@@ -80,8 +88,9 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         }
         return mapping;
     }
-    
-    public EntityMapping mappingManyStrategy(ForeignKey fk, Column col, Map<String, Table> tableMap) {
+
+    @Override
+    public EntityMapping mappingManyStrategy(ForeignKey fk, Column col, Map<String, Table> tableMap) throws Exception {
         EntityMapping mapping = new EntityMapping();
         mapping.setProp(entityPropertiesStrategy(col));
         // 设置映射类型
@@ -92,7 +101,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         mapping.setJoinColumns(fk.getFkName());
         return mapping;
     }
-    
+
     public String formatClassName(String tableName, String split) {
         String[] tmp = tableName.toLowerCase().split(split);
         StringBuilder sb = new StringBuilder();
@@ -100,61 +109,34 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
             if (s.equalsIgnoreCase("t")) {
                 continue;
             }
-            sb.append(this.toUpperCaseFirstOne(s));
+            sb.append(SysUtils.toUpperCaseFirstOne(s));
         }
         return sb.toString();
     }
-    
+
     public String formatFieldName(String fieldName, String split) {
         String[] tmp = fieldName.toLowerCase().split(split);
         StringBuilder sb = new StringBuilder();
         int i = 0;
         for (String s : tmp) {
             if (i == 0) {
-                sb.append(this.toLowerCaseFirstOne(s));
+                sb.append(SysUtils.toLowerCaseFirstOne(s));
             } else {
-                sb.append(this.toUpperCaseFirstOne(s));
+                sb.append(SysUtils.toUpperCaseFirstOne(s));
             }
             i++;
         }
         return sb.toString();
     }
-    
+
     public String formatFieldMethod(String methodName, String fieldName, String split) {
         String[] tmp = fieldName.toLowerCase().split(split);
         StringBuilder sb = new StringBuilder();
         sb.append(methodName);
         for (String s : tmp) {
-            sb.append(this.toUpperCaseFirstOne(s));
+            sb.append(SysUtils.toUpperCaseFirstOne(s));
         }
         return sb.toString();
     }
 
-    /**
-     * 首字母转小写
-     *
-     * @param s
-     * @return
-     */
-    public String toLowerCaseFirstOne(String s) {
-        if (Character.isLowerCase(s.charAt(0))) {
-            return s;
-        } else {
-            return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
-        }
-    }
-
-    /**
-     * 首字母转大写
-     *
-     * @param s
-     * @return
-     */
-    public String toUpperCaseFirstOne(String s) {
-        if (Character.isUpperCase(s.charAt(0))) {
-            return s;
-        } else {
-            return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
-        }
-    }
 }

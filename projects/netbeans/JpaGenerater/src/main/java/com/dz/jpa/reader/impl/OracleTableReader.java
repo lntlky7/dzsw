@@ -7,8 +7,6 @@ package com.dz.jpa.reader.impl;
 
 import com.dz.jpa.bean.table.Table;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import com.dz.jpa.db.JdbcDb;
 import com.dz.jpa.reader.IColumnReader;
 import com.dz.jpa.reader.IFKReader;
@@ -25,6 +23,7 @@ import java.util.Map;
  */
 public class OracleTableReader implements ITableReader {
 
+    @Override
     public Map<String, Table> readTable() throws Exception {
         Map<String, Table> map = new HashMap<String, Table>();
         Connection conn = JdbcDb.getInstance().getConn();

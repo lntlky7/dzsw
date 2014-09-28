@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author sz
  */
-public interface IEntityWriter {
+public interface IWriter {
 
-    public void writer(List<Entity> entityList);
+    public void write(List<Entity> entityList) throws Exception;
 }

@@ -5,6 +5,7 @@
  */
 package com.dz.jpa.transform;
 
+import com.dz.jpa.Cache;
 import com.dz.jpa.bean.entity.Entity;
 import com.dz.jpa.bean.entity.EntityId;
 import com.dz.jpa.bean.entity.EntityMapping;
@@ -23,12 +24,13 @@ import java.util.Map;
  * @author sz
  */
 public class SimpleTable2Entity implements ITable2Entity {
-
+    
+    @Override
     public Map<String, Entity> transform(Map<String, Table> tableMap) throws Exception {
         // 创建Entity列表
         Map<String, Entity> entityMap = new HashMap<String, Entity>();
         // 实例化生成策略
-        ITable2EntityStrategy strategy = StrategyProxyFactory.getStrategy("com.dz.jpa.transform.SimpleT2EStrategy");
+        ITable2EntityStrategy strategy = StrategyProxyFactory.getStrategy(Cache.getInstance().getSetting().getStrategy());
         // 循环table list处理转换
         for (Table t : tableMap.values()) {
             if (t.isMidTable()) {
@@ -39,6 +41,10 @@ public class SimpleTable2Entity implements ITable2Entity {
             // 处理表名
             entity.setEntityName(strategy.entityNameStrategy(t.getTableName()));
             entity.setTableName(t.getTableName());
+            // 处理描述
+            entity.setComment(t.getComment());
+            // 设置基础包
+            entity.setPackagePrefix(Cache.getInstance().getSetting().getPackage());
             // 处理PK
             EntityId entityId = new EntityId();
             int i = 0;
@@ -89,5 +95,5 @@ public class SimpleTable2Entity implements ITable2Entity {
         // 返回结果
         return entityMap;
     }
-
+    
 }

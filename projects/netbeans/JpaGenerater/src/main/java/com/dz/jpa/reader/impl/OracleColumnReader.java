@@ -20,6 +20,7 @@ import java.util.Map;
  */
 public class OracleColumnReader implements IColumnReader {
 
+    @Override
     public Map<String, Column> readTableColumn(String tableName) throws Exception {
         Map<String, Column> columnMap = new HashMap<String, Column>();
         DatabaseMetaData metaData = null;

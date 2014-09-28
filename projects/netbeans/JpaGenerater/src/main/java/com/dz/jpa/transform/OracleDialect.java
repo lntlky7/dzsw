@@ -2,6 +2,7 @@ package com.dz.jpa.transform;
 
 public class OracleDialect implements IDialect {
 
+    @Override
     public String getJavaType(String dbType) {
         String result = "";
         if (dbType != null && !"".equals(dbType)) {

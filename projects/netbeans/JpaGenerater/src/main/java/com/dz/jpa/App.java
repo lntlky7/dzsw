@@ -20,9 +20,12 @@ public class App {
         try {
             IConnInfo connInfo = new OracleConnInfo();
             connInfo.loadConnInfo();
+            ISetting setting = new SimpleFileSetting();
+            setting.loadSetting();
+            Cache.getInstance().setSetting(setting);
             JdbcDb.getInstance().init(connInfo.getDriverName(), connInfo.getUrl(), connInfo.getProps());
             JdbcDb.getInstance().openConn();
-            ITableReader nameReader = TableReaderProxyFactory.getReader("com.dz.jpa.reader.impl.OracleTableReader");
+            ITableReader nameReader = TableReaderProxyFactory.getReader(Cache.getInstance().getSetting().getReader());
             Map<String, Table> tableMap = nameReader.readTable();
             for (Table t : tableMap.values()) {
                 System.out.println(t.getTableName());
