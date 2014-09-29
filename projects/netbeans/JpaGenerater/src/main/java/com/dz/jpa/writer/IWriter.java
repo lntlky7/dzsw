@@ -6,7 +6,7 @@
 package com.dz.jpa.writer;
 
 import com.dz.jpa.bean.entity.Entity;
-import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface IWriter {
 
-    public void write(List<Entity> entityList) throws Exception;
+    public void write(Map<String, Entity> entityList) throws Exception;
 }
