@@ -45,7 +45,7 @@ public class OracleTableReader implements ITableReader {
             IFKReader fkReader = new OracleFKReader();
             t.setForeignKeyMap(fkReader.readTableFK(t.getTableName()));
             // is mid table
-            if (t.getColumnMap().size() == 2 && t.getTableName().startsWith("TL")) {
+            if (t.getColumnMap().size() == 2 && (t.getPrimaryKeyMap().size() == 2 || t.getForeignKeyMap().size() == 2)) {
                 t.setMidTable(true);
             } else {
                 t.setMidTable(false);

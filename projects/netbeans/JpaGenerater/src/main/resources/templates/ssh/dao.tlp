@@ -1,0 +1,34 @@
+package ${entity.packagePrefix}.dao.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ${entity.packagePrefix}.entity.${entity.className};
+import ${entity.entityPackage}.common.dao.HibernateDaoSupport;
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+ public class ${entity.className}DaoImpl extends HibernateDaoSupport<${entity.className}> implements I${entity.className}Dao {
+ 
+ 	private static final String GET_ALL = "from ${entity.className} entity where 1 = 1";"INSERT INTO ${entity.tableName}(<#list entity.fieldList as field>${field.fieldName}<#if field_index != fieldList?size - 1>,</#if></#list>) VALUES(<#list entity.fieldList as field>?<#if field_index != entity.fieldList?size - 1>,</#if></#list>)";
+ 	private static final String GET_BY_ID = ""from ${entity.className} entity where ${entity.entityId[0]} = ?";
+ 	private static final String GET_BY_CONDITION = "from ${entity.className} entity where 1 = 1";
+        private static final String GET_BY_CONDITION_COUNT = "select count(*) from ${entity.className} entity where 1 = 1";
+
+        @Override
+        public List<${entity.className}> getAllEntity() {
+            List<${entity.className> entityList = this.getEntityList(GET_ALL, ps.toArray());
+            return entityList;
+        }
+
+        @Override
+        public List<${entity.className}> getEntityByCondition(int firstResult, int maxResults){
+            List<${entity.className> entityList = this.getEntityListPaging(GET_ALL, ps.toArray(), firstResult, maxResults);
+            return entityList;
+        }
+ 
+
+ }

@@ -1,0 +1,14 @@
+package ${entity.packagePrefix}.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+ public class ${entity.className}ServiceImpl implements I${entity.className}Service {
+ 
+
+ }

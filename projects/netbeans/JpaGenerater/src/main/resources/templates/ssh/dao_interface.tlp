@@ -1,0 +1,19 @@
+package ${entity.packagePrefix}.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ${entity.entityPackage}.entity.${entity.className};
+import ${entity.entityPackage}.common.dao.IHibernateDaoSupport;
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+public interface I${entity.className}Dao extends IHibernateDaoSupport<${entity.className}> {
+
+        public List<${entity.className}> getAllEntity();
+
+        public List<${entity.className}> getEntityByCondition(int firstResult, int maxResults);
+}

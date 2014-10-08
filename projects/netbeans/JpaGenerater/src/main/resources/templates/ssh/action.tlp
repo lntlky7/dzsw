@@ -1,0 +1,18 @@
+package ${entity.packagePrefix}.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+@Scope("prototype")
+@Controller("${toLowerFirst(entity.className)}Action")
+public class ${entity.className}Action extends BaseActionSupport {
+
+	private static final long serialVersionUID = 1L;
+ 
+ 
+ }

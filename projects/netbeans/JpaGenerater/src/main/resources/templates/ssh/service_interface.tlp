@@ -1,0 +1,17 @@
+package ${entity.packagePrefix}.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ${entity.packagePrefix}.entity.${entity.className};
+import ${entity.packagePrefix}.dao.I${entity.className}Dao;
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+public interface I${entity.className}Service {
+
+
+}
