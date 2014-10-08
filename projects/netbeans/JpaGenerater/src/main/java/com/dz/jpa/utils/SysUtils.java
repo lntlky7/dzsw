@@ -48,4 +48,8 @@ public class SysUtils {
         }
         return builder.toString();
     }
+    
+    public String test() {
+        return "test";
+    }
 }

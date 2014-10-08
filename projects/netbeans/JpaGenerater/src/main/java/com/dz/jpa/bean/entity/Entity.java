@@ -38,7 +38,7 @@ public class Entity {
 
     private List<EntityMapping> entityMappingList;
 
-    private String createDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    private String createTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
     private String author = "adminstrator";
 
@@ -98,12 +98,12 @@ public class Entity {
         this.comment = comment;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getAuthor() {

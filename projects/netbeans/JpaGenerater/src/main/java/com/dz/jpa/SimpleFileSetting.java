@@ -21,19 +21,21 @@ public class SimpleFileSetting implements ISetting {
     private String dialect;
     private String outPath;
     private String basePackage;
+    private String templatesPath;
 
     @Override
     public void loadSetting() throws Exception {
         String settingFile = new File(this.getClass().getResource("/").toURI()).getPath() + "\\setting.properties";
         Properties p = new Properties();
         p.load(new FileInputStream(new File(settingFile)));
-        
+
         this.strategy = p.getProperty("setting.strategy");
         this.reader = p.getProperty("setting.reader");
         this.writer = p.getProperty("setting.writer");
         this.dialect = p.getProperty("setting.dialect");
         this.outPath = p.getProperty("setting.outpath");
-        this.basePackage=p.getProperty("setting.package");
+        this.basePackage = p.getProperty("setting.package");
+        this.templatesPath = p.getProperty("setting.templatepath");
     }
 
     @Override
@@ -64,6 +66,11 @@ public class SimpleFileSetting implements ISetting {
     @Override
     public String getPackage() {
         return this.basePackage;
+    }
+
+    @Override
+    public String getTemplatesPath() {
+        return this.templatesPath;
     }
 
 }

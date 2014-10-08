@@ -10,7 +10,7 @@ import com.dz.jpa.db.JdbcDb;
 import com.dz.jpa.reader.ITableReader;
 import com.dz.jpa.reader.TableReaderProxyFactory;
 import com.dz.jpa.transform.ITable2Entity;
-import com.dz.jpa.transform.SimpleTable2Entity;
+import com.dz.jpa.transform.impl.SimpleTable2Entity;
 import com.dz.jpa.writer.IWriter;
 import com.dz.jpa.writer.WriterProxyFactory;
 import java.util.Map;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.transform;
+package com.dz.jpa.transform.impl;
 
 import com.dz.jpa.Cache;
 import com.dz.jpa.bean.entity.Entity;
@@ -14,6 +14,9 @@ import com.dz.jpa.bean.table.Column;
 import com.dz.jpa.bean.table.ForeignKey;
 import com.dz.jpa.bean.table.PrimaryKey;
 import com.dz.jpa.bean.table.Table;
+import com.dz.jpa.transform.ITable2Entity;
+import com.dz.jpa.transform.ITable2EntityStrategy;
+import com.dz.jpa.transform.StrategyProxyFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

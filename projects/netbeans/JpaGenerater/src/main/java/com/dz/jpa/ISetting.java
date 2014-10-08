@@ -24,4 +24,6 @@ public interface ISetting {
     public String getOutPath();
     
     public String getPackage();
+    
+    public String getTemplatesPath();
 }

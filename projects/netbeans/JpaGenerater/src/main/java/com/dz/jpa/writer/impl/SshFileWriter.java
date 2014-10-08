@@ -3,17 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.writer;
+package com.dz.jpa.writer.impl;
 
 import com.dz.jpa.Cache;
 import com.dz.jpa.bean.entity.Entity;
 import com.dz.jpa.utils.SysUtils;
+import com.dz.jpa.writer.IWriter;
+import com.dz.jpa.writer.LowerCaseFirstWordMethod;
+import com.dz.jpa.writer.UpperCaseFirstWordMethod;
+import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
+import freemarker.template.TemplateHashModel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -48,32 +55,38 @@ public class SshFileWriter implements IWriter {
         }
         // 创建freemark Configure
         Configuration config = new Configuration();
-        config.setClassForTemplateLoading(SshFileWriter.class, "templates\\ssh");
+//        config.setClassForTemplateLoading(SshFileWriter.class, "/templates");
+        config.setDirectoryForTemplateLoading(new File(Cache.getInstance().getSetting().getTemplatesPath()));
+        config.setObjectWrapper(new DefaultObjectWrapper());
         // 写入文件
         for (Entity entity : entityMap.values()) {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("entity", entity);
+            data.put("toUpperFirst", new UpperCaseFirstWordMethod());
+            data.put("toLowerFirst", new LowerCaseFirstWordMethod());
             // entity
-            this.write(config, entity, entityDir.getPath() + "\\" + entity.getEntityName() + "Entity.java", "entity.tlp");
-            // dao interface
-            this.write(config, entity, daoDir.getPath() + "\\" + "I" + entity.getEntityName() + "Dao.java", "dao_interface.tlp");
-            // dao
-            this.write(config, entity, daoDir.getPath() + "\\" + entity.getEntityName() + "DaoImpl.java", "dao.tlp");
-            // service interface
-            this.write(config, entity, serviceDir.getPath() + "\\" + "I" + entity.getEntityName() + "Service.java", "service_interface.tlp");
-            // service
-            this.write(config, entity, serviceDir.getPath() + "\\" + entity.getEntityName() + "ServiceImpl.java", "service.tlp");
-            // action
-            this.write(config, entity, actionDir.getPath() + "\\" + entity.getEntityName() + "Action.java", "action.tlp");
-            // view
-            this.write(config, entity, viewDir.getPath() + "\\" + entity.getEntityName() + "View.java", "view.tlp");
+            this.write(config, data, entityDir.getPath() + "\\" + entity.getEntityName() + "Entity.java", "entity.tlp");
+//            // dao interface
+//            this.write(config, entity, daoDir.getPath() + "\\" + "I" + entity.getEntityName() + "Dao.java", "dao_interface.tlp");
+//            // dao
+//            this.write(config, entity, daoDir.getPath() + "\\" + entity.getEntityName() + "DaoImpl.java", "dao.tlp");
+//            // service interface
+//            this.write(config, entity, serviceDir.getPath() + "\\" + "I" + entity.getEntityName() + "Service.java", "service_interface.tlp");
+//            // service
+//            this.write(config, entity, serviceDir.getPath() + "\\" + entity.getEntityName() + "ServiceImpl.java", "service.tlp");
+//            // action
+//            this.write(config, entity, actionDir.getPath() + "\\" + entity.getEntityName() + "Action.java", "action.tlp");
+//            // view
+//            this.write(config, entity, viewDir.getPath() + "\\" + entity.getEntityName() + "View.java", "view.tlp");
         }
     }
 
-    private void write(Configuration config, Entity entity, String writeFile, String tlp) throws Exception {
+    private void write(Configuration config,  Map<String, Object> data, String writeFile, String tlp) throws Exception {
         Writer writer = null;
         try {
             writer = new OutputStreamWriter(new FileOutputStream(writeFile));
             Template t = config.getTemplate(tlp);
-            t.process(entity, writer);
+            t.process(data, writer);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -87,4 +100,13 @@ public class SshFileWriter implements IWriter {
             }
         }
     }
+
+    // 指定要在ftl页面使用的静态包名
+    public TemplateHashModel useStaticPackage(String packageName) throws Exception {
+        BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+        TemplateHashModel staticModels = wrapper.getStaticModels();
+        TemplateHashModel fileStatics = (TemplateHashModel) staticModels.get(packageName);
+        return fileStatics;
+    }
+
 }

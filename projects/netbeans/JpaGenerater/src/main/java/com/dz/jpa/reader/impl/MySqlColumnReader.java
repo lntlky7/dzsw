@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author sz
  */
-public class OracleColumnReader implements IColumnReader {
+public class MySqlColumnReader implements IColumnReader {
 
     @Override
     public Map<String, Column> readTableColumn(String tableName) throws Exception {

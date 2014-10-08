@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.dz.jpa.transform;
 
 /**
@@ -11,8 +10,8 @@ package com.dz.jpa.transform;
  * @author sz
  */
 public interface IDialect {
-    
-    public String getJavaType(String typeName);
-    
+
+    public String getJavaType(String typeName, int decimalDigits);
+
 //    public String getJaveType(int type);
 }

@@ -21,7 +21,7 @@ import java.util.Map;
  *
  * @author sz
  */
-public class OracleTableReader implements ITableReader {
+public class MySqlTableReader implements ITableReader {
 
     @Override
     public Map<String, Table> readTable() throws Exception {
@@ -36,13 +36,13 @@ public class OracleTableReader implements ITableReader {
             t.setTableName(rs.getString("TABLE_NAME"));
             t.setComment(rs.getString("REMARKS"));
             // read column
-            IColumnReader columnReader = new OracleColumnReader();
+            IColumnReader columnReader = new MySqlColumnReader();
             t.setColumnMap(columnReader.readTableColumn(t.getTableName()));
             // read pk
-            IPKReader pkReader = new OraclePKReader();
+            IPKReader pkReader = new MySqlPKReader();
             t.setPrimaryKeyMap(pkReader.readTablePK(t.getTableName()));
             // read fk
-            IFKReader fkReader = new OracleFKReader();
+            IFKReader fkReader = new MySqlFKReader();
             t.setForeignKeyMap(fkReader.readTableFK(t.getTableName()));
             // is mid table
             if (t.getColumnMap().size() == 2 && t.getTableName().startsWith("TL")) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.transform;
+package com.dz.jpa.transform.impl;
 
 import com.dz.jpa.Cache;
 import com.dz.jpa.bean.entity.Entity;
@@ -13,6 +13,9 @@ import com.dz.jpa.bean.table.Column;
 import com.dz.jpa.bean.table.ForeignKey;
 import com.dz.jpa.bean.table.PrimaryKey;
 import com.dz.jpa.bean.table.Table;
+import com.dz.jpa.transform.DialectProxyFactory;
+import com.dz.jpa.transform.IDialect;
+import com.dz.jpa.transform.ITable2EntityStrategy;
 import com.dz.jpa.utils.SysUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         prop.setName(formatFieldName(col.getName(), "_"));
         prop.setColumnName(col.getName());
         prop.setType(col.getType());
-        String typeName = dialect.getJavaType(col.getTypeName());
+        String typeName = dialect.getJavaType(col.getTypeName(), col.getDecimalDigits());
         prop.setTypeName(typeName);
         prop.setLength(col.getLength());
         prop.setComment(col.getRemark());
