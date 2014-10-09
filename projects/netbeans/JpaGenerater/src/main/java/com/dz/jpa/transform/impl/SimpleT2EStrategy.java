@@ -40,6 +40,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         prop.setColumnName(col.getName());
         prop.setType(col.getType());
         String typeName = dialect.getJavaType(col.getTypeName(), col.getDecimalDigits());
+        prop.setColumnTypeName(col.getTypeName());
         prop.setTypeName(typeName);
         prop.setLength(col.getLength());
         prop.setComment(col.getRemark());

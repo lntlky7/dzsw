@@ -9,10 +9,16 @@ import java.util.List;
  * @author ${entity.author}
  */
 @Scope("prototype")
-@Controller("${toLowerFirst(entity.className)}Action")
-public class ${entity.className}Action extends BaseActionSupport {
+@Controller("${toLowerFirst(entity.entityName)}Action")
+public class ${entity.entityName}Action extends BaseActionSupport {
 
-	private static final long serialVersionUID = 1L;
- 
- 
- }
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 
+     * @return
+     */
+    public String ${toLowerFirst(entity.entityName)}Index() {
+        return "";
+    }
+}

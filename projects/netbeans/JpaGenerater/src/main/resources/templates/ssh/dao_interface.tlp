@@ -3,17 +3,44 @@ package ${entity.packagePrefix}.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import ${entity.entityPackage}.entity.${entity.className};
-import ${entity.entityPackage}.common.dao.IHibernateDaoSupport;
+import ${entity.packagePrefix}.entity.${entity.entityName}Entity;
+import ${entity.packagePrefix}.common.dao.IHibernateDaoSupport;
 
 /**
  * Description ${entity.comment}
  * CreateDate ${entity.createTime}
  * @author ${entity.author}
  */
-public interface I${entity.className}Dao extends IHibernateDaoSupport<${entity.className}> {
+public interface I${entity.entityName}Dao extends IHibernateDaoSupport<${entity.entityName}Entity> {
 
-        public List<${entity.className}> getAllEntity();
+    /**
+     * 获取所有实体
+     * 
+     * @return
+     */
+    public List<${entity.entityName}Entity> getAll${entity.entityName}Entity();
 
-        public List<${entity.className}> getEntityByCondition(int firstResult, int maxResults);
+    /**
+     * 获取实体分页
+     * 
+     * @param firstResult
+     * @param maxResults
+     * @return
+     */
+    public List<${entity.entityName}Entity> get${entity.entityName}EntityPaging(int firstResult, int maxResults);
+
+    /**
+     * 获取实体分页总条数
+     * 
+     * @return
+     */
+    public long get${entity.entityName}EntityPagingCount();
+
+    /**
+     * 获取指定Id的实体
+     * 
+     * @param id
+     * @return
+     */
+    public ${entity.entityName}Entity get${entity.entityName}EntityById(Serializable id);
 }

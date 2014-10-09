@@ -5,6 +5,8 @@
  */
 package com.dz.jpa.utils;
 
+import com.dz.jpa.bean.entity.Properties;
+
 /**
  *
  * @author sz
@@ -48,8 +50,15 @@ public class SysUtils {
         }
         return builder.toString();
     }
-    
-    public String test() {
-        return "test";
+
+    public static boolean isSetLength(String colTypeName) {
+        boolean result = false;
+        if (!"DATE".equalsIgnoreCase(colTypeName)
+                && !"DATETIME".equalsIgnoreCase(colTypeName)
+                && !"TIME".equalsIgnoreCase(colTypeName)
+                && !"TIMESTAMP".equalsIgnoreCase(colTypeName)) {
+            result = true;
+        }
+        return result;
     }
 }

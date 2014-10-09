@@ -18,6 +18,7 @@ public class Properties {
     private String comment;
 
     private String columnName;
+    private String columnTypeName;
 
     public String getName() {
         return name;
@@ -65,6 +66,14 @@ public class Properties {
 
     public void setColumnName(String columnName) {
         this.columnName = columnName;
+    }
+
+    public String getColumnTypeName() {
+        return columnTypeName;
+    }
+
+    public void setColumnTypeName(String columnTypeName) {
+        this.columnTypeName = columnTypeName;
     }
 
 }
