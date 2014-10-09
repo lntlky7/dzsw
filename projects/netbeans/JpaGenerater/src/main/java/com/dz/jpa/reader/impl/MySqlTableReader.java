@@ -37,15 +37,15 @@ public class MySqlTableReader implements ITableReader {
             t.setComment(rs.getString("REMARKS"));
             // read column
             IColumnReader columnReader = new MySqlColumnReader();
-            t.setColumnMap(columnReader.readTableColumn(t.getTableName()));
+            t.setColumnMap(columnReader.readTableColumn(schema, t.getTableName()));
             // read pk
             IPKReader pkReader = new MySqlPKReader();
-            t.setPrimaryKeyMap(pkReader.readTablePK(t.getTableName()));
+            t.setPrimaryKeyMap(pkReader.readTablePK(schema, t.getTableName()));
             // read fk
             IFKReader fkReader = new MySqlFKReader();
-            t.setForeignKeyMap(fkReader.readTableFK(t.getTableName()));
+            t.setForeignKeyMap(fkReader.readTableFK(schema, t.getTableName()));
             // is mid table
-            if (t.getColumnMap().size() == 2 && t.getTableName().startsWith("TL")) {
+            if (t.getColumnMap().size() == 2 && t.getForeignKeyMap().size() == 2) {
                 t.setMidTable(true);
             } else {
                 t.setMidTable(false);

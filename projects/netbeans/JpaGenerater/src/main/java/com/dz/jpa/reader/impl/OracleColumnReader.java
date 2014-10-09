@@ -21,7 +21,7 @@ import java.util.Map;
 public class OracleColumnReader implements IColumnReader {
 
     @Override
-    public Map<String, Column> readTableColumn(String tableName) throws Exception {
+    public Map<String, Column> readTableColumn(String schema, String tableName) throws Exception {
         Map<String, Column> columnMap = new HashMap<String, Column>();
         DatabaseMetaData metaData = null;
         Connection conn = null;
@@ -30,7 +30,7 @@ public class OracleColumnReader implements IColumnReader {
         try {
             conn = JdbcDb.getInstance().getConn();
             metaData = conn.getMetaData();
-            rs = metaData.getColumns(conn.getCatalog(), "SHUNFENG", tableName, "%");
+            rs = metaData.getColumns(conn.getCatalog(), schema, tableName, "%");
             while (rs.next()) {
                 Column c = new Column();
                 c.setName(rs.getString("COLUMN_NAME"));

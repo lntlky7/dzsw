@@ -1,0 +1,116 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
+
+<form id="pagerForm" method="post" action="${ctx}/">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="${pages.pageSize}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="${ctx}/" method="post">
+		<div class="searchBar">
+			<input type="hidden" name="pageNum" value="1" />
+			<input type="hidden" name="numPerPage" value="${pages.pageSize}" />
+			<table class="searchContent">
+				<tr>
+					<td>
+						<s:text name="rolemanage.text.rolename" />:
+						<input type="text" name="keyword" value="${keyword }" />
+					</td>
+					<td>
+						<div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">
+									<s:text name="common.text.search" />
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li>
+				<a class="add" href="${ctx}/rolemanager/role_edit.do" mask="true" target="dialog" width="400" height="320">
+					<span><s:text name="common.text.new" /></span>
+				</a>
+			</li>
+			<li>
+				<a title="<s:text name="common.info.isdelete"/>" target="selectedTodo" rel="ids" href="${ctx}/" class="delete">
+					<span><s:text name="common.text.delete" /></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="18"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="80"><s:text name="common.text.serialnumber" /></th>
+				<th width="120"><s:text name="rolemanage.text.rolename" /></th>
+				<th width="200"><s:text name="rolemanage.text.roledesc" /></th>
+				<th width="80">创建人</th>
+				<th width="80">创建时间</th>
+				<th width="80">修改人</th>
+				<th width="80">修改时间</th>
+				<th width="80"><s:text name="rolemanage.text.setpermit" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="view" items="${pageModule.list}" varStatus="status">
+				<tr target="roleid" rel="${view.id }">
+					<td>
+						<input name="ids" value="${view.id }" type="checkbox">
+					</td>
+					<td>
+						<c:out value="${(status.index +1)+(pageModule.curPageNum-1)* numPerPage}" />
+					</td>
+					<td>${view.name}</td>
+					<td>${view.description}"</td>
+					<td>${view.createUser}</td>
+					<td><fmt:formatDate value="${view.createTime}" pattern="yyyy-MM-dd" /></td>
+					<td>${view.updateUser}</td>
+					<td><fmt:formatDate value="${view.updateTime}" pattern="yyyy-MM-dd" /></td>
+					<td>
+						<a class="editbutton" href="${ctx}/rolemanager/role_edit.do?id=${view.id }" mask="true"
+						 	target="dialog" rel="setpage" title="<s:text name="rolemanage.text.edit" />"></a>
+						<a class="setbutton" href="${ctx}/rolemanager/role_assign.do?id=${view.id }" mask="true"
+							target="dialog"  height="400" title="<s:text name="rolemanage.text.set" />"></a>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+<div class="panelBar">
+	<div class="pages">
+		<span>
+			<s:text name="common.text.display" />
+		</span>
+		<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+			<option value="5"
+				<c:if test="${numPerPage==5 }">selected="selected"</c:if>>5</option>
+			<option value="10"
+				<c:if test="${numPerPage==10}">selected="selected"</c:if>>10</option>
+			<option value="20"
+				<c:if test="${numPerPage==20 }">selected="selected"</c:if>>20</option>
+			<option value="50"
+				<c:if test="${numPerPage==50}">selected="selected"</c:if>>50</option>
+		</select>
+		<span>
+			<s:text name="common.text.rowstotal" />${pageModule.totalCount}
+			<s:text name="common.text.rows" />
+		</span>
+	</div>
+
+	<div class="pagination" targetType="navTab" totalCount="${pageModule.totalCount }" numPerPage="${numPerPage }"
+		pageNumShown="10" currentPage="${pageModule.curPageNum }">
+	</div>
+</div>

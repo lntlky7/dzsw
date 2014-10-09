@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface IFKReader {
     
-    public Map<String, ForeignKey> readTableFK(String tableName) throws Exception;
+    public Map<String, ForeignKey> readTableFK(String schema, String tableName) throws Exception;
             
 }

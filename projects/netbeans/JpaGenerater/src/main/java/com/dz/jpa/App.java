@@ -30,9 +30,12 @@ public class App {
             connInfo.loadConnInfo();
             ISetting setting = new SimpleFileSetting();
             setting.loadSetting();
+            IAdvancedSetting advSetting = new SimpleFileAdvancedSetting();
+            advSetting.loadSetting();
             System.out.println("[" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +"]参数设置完毕");
             // 设置缓存
             Cache.getInstance().setSetting(setting);
+            Cache.getInstance().setAdvancedSetting(advSetting);
             System.out.println("[" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +"]缓存设置完毕");
             // 打开数据库连接
             JdbcDb.getInstance().init(connInfo.getDriverName(), connInfo.getUrl(), connInfo.getProps());

@@ -21,7 +21,7 @@ import java.util.Map;
 public class OracleFKReader implements IFKReader {
 
     @Override
-    public Map<String, ForeignKey> readTableFK(String tableName) throws Exception {
+    public Map<String, ForeignKey> readTableFK(String schema, String tableName) throws Exception {
         Map<String, ForeignKey> fkMap = new HashMap<String, ForeignKey>();
         DatabaseMetaData metaData = null;
         Connection conn = null;
@@ -29,7 +29,7 @@ public class OracleFKReader implements IFKReader {
         try {
             conn = JdbcDb.getInstance().getConn();
             metaData = conn.getMetaData();
-            rs = metaData.getImportedKeys(null, null, tableName);
+            rs = metaData.getImportedKeys(null, schema, tableName);
             while (rs.next()) {
                 ForeignKey fk = new ForeignKey();
                 fk.setMasterTable(rs.getString("PKTABLE_NAME"));

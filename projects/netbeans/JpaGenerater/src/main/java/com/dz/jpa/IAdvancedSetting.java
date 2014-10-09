@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dz.jpa.reader;
-
-import com.dz.jpa.bean.table.PrimaryKey;
-import java.util.Map;
+package com.dz.jpa;
 
 /**
  *
  * @author sz
  */
-public interface IPKReader {
+public interface IAdvancedSetting {
 
-    public Map<String, PrimaryKey> readTablePK(String schema, String tableName) throws Exception;
+    public void loadSetting() throws Exception;
+
+    public String getModuleName();
+
 }

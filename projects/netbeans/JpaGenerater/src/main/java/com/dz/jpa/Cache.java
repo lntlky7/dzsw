@@ -26,12 +26,22 @@ public class Cache {
 
     private ISetting setting;
 
+    private IAdvancedSetting advancedSetting;
+
     public ISetting getSetting() {
         return setting;
     }
 
     public void setSetting(ISetting setting) {
         this.setting = setting;
+    }
+
+    public IAdvancedSetting getAdvancedSetting() {
+        return advancedSetting;
+    }
+
+    public void setAdvancedSetting(IAdvancedSetting advancedSetting) {
+        this.advancedSetting = advancedSetting;
     }
 
 }

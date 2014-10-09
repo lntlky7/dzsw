@@ -30,7 +30,7 @@ public class MySqlConnInfo extends AbstractConnInfo {
         props.setProperty("user",  p.getProperty("jdbc.username"));
         props.setProperty("password", p.getProperty("jdbc.password"));
         props.setProperty("schema", p.getProperty("mysql.schema"));
-        props.setProperty("tableNamePattern", p.getProperty("mysql"));
+        props.setProperty("tableNamePattern", p.getProperty("mysql.tableNamePattern"));
     }
     
 }

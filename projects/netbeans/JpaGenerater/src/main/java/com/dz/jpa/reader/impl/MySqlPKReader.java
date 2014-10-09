@@ -21,7 +21,7 @@ import java.util.Map;
 public class MySqlPKReader implements IPKReader {
     
     @Override
-    public Map<String, PrimaryKey> readTablePK(String tableName) throws Exception {
+    public Map<String, PrimaryKey> readTablePK(String schema, String tableName) throws Exception {
         Map<String, PrimaryKey> pkMap = new HashMap<String, PrimaryKey>();
         DatabaseMetaData metaData = null;
         Connection conn = null;
@@ -29,7 +29,7 @@ public class MySqlPKReader implements IPKReader {
         try {
             conn = JdbcDb.getInstance().getConn();
             metaData = conn.getMetaData();
-            rs = metaData.getPrimaryKeys(null, null, tableName);
+            rs = metaData.getPrimaryKeys(null, schema, tableName);
             while (rs.next()) {
                 PrimaryKey pk = new PrimaryKey();
                 pk.setMasterTable(rs.getString("TABLE_NAME"));

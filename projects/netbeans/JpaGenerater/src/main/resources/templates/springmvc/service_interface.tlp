@@ -1,0 +1,63 @@
+package ${entity.packagePrefix}.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ${entity.packagePrefix}.entity.${entity.entityName}Entity;
+import ${entity.packagePrefix}.dao.I${entity.entityName}Dao;
+import ${entity.packagePrefix}.view.${entity.entityName}View;
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+public interface I${entity.entityName}Service {
+
+    /**
+     * 保存
+     * 
+     * @param view
+     * @return
+     */
+    public ${entity.entityName}View save(${entity.entityName}View view);
+
+    /**
+     * 更新
+     * 
+     * @param view
+     * @return
+     */
+    public ${entity.entityName}View update(${entity.entityName}View view);
+
+    /**
+     * 保存或更新
+     * 
+     * @param view
+     * @return
+     */
+    public ${entity.entityName}View saveOrUpdate(${entity.entityName}View view);
+
+    /**
+     * 删除
+     * 
+     * @param id
+     */
+    public void remove(Serializable id);
+
+    /**
+     * 删除多条
+     * 
+     * @param ids
+     */
+    public void removeByIds(Serializable[] ids);
+
+    /**
+     * 分页显示
+     * 
+     * @param pages
+     * @return
+     */
+    public Pages find${entity.entityName}List(Pages pages);
+
+}

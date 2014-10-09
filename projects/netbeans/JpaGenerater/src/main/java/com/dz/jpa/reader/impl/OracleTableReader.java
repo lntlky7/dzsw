@@ -37,15 +37,15 @@ public class OracleTableReader implements ITableReader {
             t.setComment(rs.getString("REMARKS"));
             // read column
             IColumnReader columnReader = new OracleColumnReader();
-            t.setColumnMap(columnReader.readTableColumn(t.getTableName()));
+            t.setColumnMap(columnReader.readTableColumn(schema, t.getTableName()));
             // read pk
             IPKReader pkReader = new OraclePKReader();
-            t.setPrimaryKeyMap(pkReader.readTablePK(t.getTableName()));
+            t.setPrimaryKeyMap(pkReader.readTablePK(schema, t.getTableName()));
             // read fk
             IFKReader fkReader = new OracleFKReader();
-            t.setForeignKeyMap(fkReader.readTableFK(t.getTableName()));
+            t.setForeignKeyMap(fkReader.readTableFK(schema, t.getTableName()));
             // is mid table
-            if (t.getColumnMap().size() == 2 && (t.getPrimaryKeyMap().size() == 2 || t.getForeignKeyMap().size() == 2)) {
+            if (t.getColumnMap().size() == 2 && t.getForeignKeyMap().size() == 2) {
                 t.setMidTable(true);
             } else {
                 t.setMidTable(false);

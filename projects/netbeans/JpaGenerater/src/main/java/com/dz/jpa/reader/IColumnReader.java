@@ -15,5 +15,5 @@ import java.util.Map;
  */
 public interface IColumnReader {
     
-    public Map<String, Column> readTableColumn(String tableName) throws Exception;
+    public Map<String, Column> readTableColumn(String schema, String tableName) throws Exception;
 }

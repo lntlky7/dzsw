@@ -1,0 +1,105 @@
+package ${entity.packagePrefix}.view;
+
+import java.io.Serializable;
+
+import ${entity.packagePrefix}.entity.UserEntity;
+<#list entity.entityMappingList as mapping>
+    <#if (mapping.mappingType == 2)>
+import ${entity.packagePrefix}.entity.${mapping.slaveClass};
+    <#elseif (mapping.mappingType == 3)>
+import ${entity.packagePrefix}.entity.${mapping.masterClass};
+    <#elseif (mapping.mappingType == 4)>
+import ${entity.packagePrefix}.entity.${mapping.slaveClass};
+    </#if>
+</#list>
+
+/**
+ * Description ${entity.comment}
+ * CreateDate ${entity.createTime}
+ * @author ${entity.author}
+ */
+public class ${entity.entityName}View implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    
+<#if (entity.entityId.entityIdList?size > 1)>
+<#elseif (entity.entityId.entityIdList?size == 1)>
+    <#assign eid=entity.entityId.entityIdList[0] />
+    /**
+     * <#if (eid.prop??)>${eid.prop.comment}</#if>
+     */
+    private ${eid.typeName} ${eid.name};
+</#if>
+
+<#list entity.propList as prop>
+    /**
+     * ${prop.comment}
+     */
+  <#if (prop.name == "createId")>
+    private UserEntity ${prop.name};
+  <#elseif (prop.name == "updateId")>
+    private UserEntity ${prop.name};
+  <#else>
+    private ${prop.typeName} ${prop.name};
+  </#if>
+</#list>
+<#list entity.entityMappingList as mapping>
+    /**
+     * <#if (mapping.prop??)>${mapping.prop.comment}</#if>
+     */
+  <#if (mapping.mappingType == 2)>
+    private List<${mapping.slaveClass}> ${toLowerFirst(mapping.slaveClass)}s;
+  <#elseif (mapping.mappingType == 3)>
+    private ${mapping.masterClass} ${toLowerFirst(mapping.masterClass)};
+  <#elseif (mapping.mappingType == 4)>
+    private List<${mapping.slaveClass}> ${toLowerFirst(mapping.slaveClass)}s;
+  </#if>
+
+</#list>
+    public ${entity.entityName}View() {
+
+    }
+
+    public ${entity.entityName}View(${entity.entityName}Entity entity) {
+<#list entity.propList as prop>
+  <#if (prop.name != "createId" && prop.name != "updateId")>
+        this.set${toUpperFirst(prop.name)}(entity.get${toUpperFirst(prop.name)});
+  </#if>
+</#list>
+    }
+
+<#if (entity.entityId.entityIdList?size > 1)>
+<#elseif (entity.entityId.entityIdList?size == 1)>
+  <#list entity.entityId.entityIdList as eid>
+    public void set${toUpperFirst(eid.name)} (${eid.typeName} ${eid.name}) {
+        this.${eid.name} = ${eid.name};
+    }
+
+    public ${eid.typeName} get${toUpperFirst(eid.name)}() {
+        return ${eid.name};
+    }
+
+  </#list>
+</#if>
+<#list entity.propList as prop>
+    public void set${toUpperFirst(prop.name)} (${prop.typeName} ${prop.name}) {
+        this.${prop.name} = ${prop.name};
+    }
+
+    public ${prop.typeName} get${toUpperFirst(prop.name)}() {
+        return ${prop.name};
+    }
+
+</#list>
+<#list entity.entityMappingList as mapping>
+  <#if (mapping.prop??)>
+    public void set${toUpperFirst(mapping.prop.name)} (${mapping.prop.typeName} ${mapping.prop.name}) {
+        this.${mapping.prop.name} = ${mapping.prop.name};
+    }
+
+    public ${mapping.prop.typeName} get${toUpperFirst(mapping.prop.name)}() {
+        return ${mapping.prop.name};
+    }
+  </#if>
+</#list>
+}
