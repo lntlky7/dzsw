@@ -11,6 +11,7 @@ import com.dz.jpa.utils.SysUtils;
 import com.dz.jpa.writer.IWriter;
 import com.dz.jpa.writer.IsSetLengthMethod;
 import com.dz.jpa.writer.LowerCaseFirstWordMethod;
+import com.dz.jpa.writer.NumberFormatMethod;
 import com.dz.jpa.writer.UpperCaseFirstWordMethod;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -69,6 +70,7 @@ public class SpringMVCFileWriter implements IWriter {
             data.put("toUpperFirst", new UpperCaseFirstWordMethod());
             data.put("toLowerFirst", new LowerCaseFirstWordMethod());
             data.put("isSetLength", new IsSetLengthMethod());
+            data.put("formatNumber", new NumberFormatMethod());
             // entity
             this.write(config, data, entityDir.getPath() + "\\" + entity.getEntityName() + "Entity.java", "entity.tlp");
             // dao interface
