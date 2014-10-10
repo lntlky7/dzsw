@@ -64,6 +64,7 @@ public class SimpleTable2Entity implements ITable2Entity {
             // 处理列
             List<Properties> propList = new ArrayList<Properties>();
             for (Column c : t.getColumnMap().values()) {
+                // 排除主键和外键的列
                 if (!t.getPrimaryKeyMap().containsKey(c.getName()) && !t.getForeignKeyMap().containsKey(c.getName())) {
                     Properties p = strategy.entityPropertiesStrategy(c);
                     propList.add(p);

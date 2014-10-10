@@ -25,7 +25,7 @@ import java.util.Map;
  *
  * @author sz
  */
-public class SimpleT2EStrategy implements ITable2EntityStrategy {
+public class SimpleTransformStrategy implements ITable2EntityStrategy {
 
     @Override
     public String entityNameStrategy(String tableName) {
@@ -67,6 +67,7 @@ public class SimpleT2EStrategy implements ITable2EntityStrategy {
         PrimaryKey pk = masterTable.getPrimaryKeyMap().get(prop.getColumnName());
         if (pk.isReferenced()) {
             mapping = new EntityMapping();
+            mapping.setProp(prop);
             Table slaveTable = tableMap.get(pk.getSlaveTable());
             if (slaveTable.isMidTable()) {// many to many
                 mapping.setMappingType(Entity.MAPPING_MANY_TO_MANY);

@@ -3,6 +3,8 @@ package ${entity.packagePrefix}.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ${entity.packagePrefix}.entity.${entity.entityName}Entity;
 import ${entity.packagePrefix}.common.dao.HibernateDaoSupport;
 
