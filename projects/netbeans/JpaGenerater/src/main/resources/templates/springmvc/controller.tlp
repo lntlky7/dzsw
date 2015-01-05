@@ -1,4 +1,4 @@
-package ${entity.packagePrefix}.action;
+package ${entity.packagePrefix}.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

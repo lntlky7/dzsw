@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.dz.jpa.db.IConnInfo;
 import com.dz.jpa.db.OracleConnInfo;
 import com.dz.jpa.db.JdbcDb;
+import com.dz.jpa.db.MySqlConnInfo;
 import com.dz.jpa.reader.ITableReader;
 import com.dz.jpa.reader.TableReaderProxyFactory;
 import com.dz.jpa.transform.ITable2Entity;
@@ -26,7 +27,7 @@ public class App {
     public static void main(String[] args) {
         try {
             // 获取资源文件参数
-            IConnInfo connInfo = new OracleConnInfo();
+            IConnInfo connInfo = new MySqlConnInfo();
             connInfo.loadConnInfo();
             ISetting setting = new SimpleFileSetting();
             setting.loadSetting();

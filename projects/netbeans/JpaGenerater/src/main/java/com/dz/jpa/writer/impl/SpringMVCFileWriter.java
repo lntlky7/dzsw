@@ -37,23 +37,23 @@ public class SpringMVCFileWriter implements IWriter {
         dirBuffer.append(Cache.getInstance().getAdvancedSetting().getModuleName());
         String baseDir = dirBuffer.toString();
         // 创建路径
-        File entityDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\ssh\\" + baseDir + "\\entity");
+        File entityDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\springmvc\\" + baseDir + "\\entity");
         if (!entityDir.exists()) {
             entityDir.mkdirs();
         }
-        File daoDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\ssh\\" + baseDir + "\\dao");
+        File daoDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\springmvc\\" + baseDir + "\\dao");
         if (!daoDir.exists()) {
             daoDir.mkdirs();
         }
-        File serviceDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\ssh\\" + baseDir + "\\service");
+        File serviceDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\springmvc\\" + baseDir + "\\service");
         if (!serviceDir.exists()) {
             serviceDir.mkdirs();
         }
-        File actionDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\ssh\\" + baseDir + "\\action");
+        File actionDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\springmvc\\" + baseDir + "\\controller");
         if (!actionDir.exists()) {
             actionDir.mkdirs();
         }
-        File viewDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\ssh\\" + baseDir + "\\view");
+        File viewDir = new File(Cache.getInstance().getSetting().getOutPath() + "\\springmvc\\" + baseDir + "\\view");
         if (!viewDir.exists()) {
             viewDir.mkdirs();
         }
@@ -82,7 +82,7 @@ public class SpringMVCFileWriter implements IWriter {
             // service
             this.write(config, data, serviceDir.getPath() + "\\" + entity.getEntityName() + "ServiceImpl.java", "service.tlp");
             // action
-            this.write(config, data, actionDir.getPath() + "\\" + entity.getEntityName() + "Action.java", "controller.tlp");
+            this.write(config, data, actionDir.getPath() + "\\" + entity.getEntityName() + "Controller.java", "controller.tlp");
             // view
             this.write(config, data, viewDir.getPath() + "\\" + entity.getEntityName() + "View.java", "view.tlp");
         }
