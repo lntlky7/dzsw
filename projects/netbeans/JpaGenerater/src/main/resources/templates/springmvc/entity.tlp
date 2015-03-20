@@ -19,7 +19,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.GenerationType;
 
-import ${entity.packagePrefix}.entity.UserEntity;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.rgsc.entity.EnterprisePersonnelEntity;
+
+//import com.rgsc.common.protocol.view.${entity.entityName}View;
 <#list entity.entityMappingList as mapping>
     <#if (mapping.mappingType == 2)>
 import ${entity.packagePrefix}.entity.${mapping.slaveClass}Entity;
@@ -47,11 +51,11 @@ public class ${entity.entityName}Entity implements Serializable {
 <#elseif (entity.entityId.entityIdList?size == 1)>
     <#assign eid=entity.entityId.entityIdList[0] />
     /**
-     * <#if (eid.prop??)>${eid.prop.comment}</#if>
+     * <#if (eid??)>${eid.comment}</#if>
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
-    @SequenceGenerator(name = "sequence", sequenceName = "${entity.tableName}_SEQUENCE", allocationSize = 1)
+    @GenericGenerator(name = "idGenerator", strategy = "com.rgsc.common.dao.IdGenerator")
+    @GeneratedValue(generator = "idGenerator")
     @Column(name = "${eid.columnName}"<#if (eid.length > 0)>, length=${eid.length}</#if>)
     private ${eid.typeName} ${eid.name};
 </#if>
@@ -61,13 +65,13 @@ public class ${entity.entityName}Entity implements Serializable {
      * ${prop.comment}
      */
   <#if (prop.name == "createId")>
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.REFRESH, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.REFRESH, targetEntity = EnterprisePersonnelEntity.class)
     @JoinColumn(name = "CREATE_ID")
-    private UserEntity ${prop.name};
+    private EnterprisePersonnelEntity ${prop.name};
   <#elseif (prop.name == "updateId")>
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.REFRESH, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.REFRESH, targetEntity = EnterprisePersonnelEntity.class)
     @JoinColumn(name = "UPDATE_ID")
-    private UserEntity ${prop.name};
+    private EnterprisePersonnelEntity ${prop.name};
   <#else>
     @Column(name = "${prop.columnName}"<#if (prop.length > 0 && isSetLength(prop.columnTypeName))>, length=${formatNumber(prop.length)}</#if><#if (prop.columnTypeName == "nvarchar2" || prop.columnTypeName == "NVARCHAR2")>, columnDefinition = "nvarchar2"</#if>)
     private ${prop.typeName} ${prop.name};
@@ -79,7 +83,7 @@ public class ${entity.entityName}Entity implements Serializable {
      * <#if (mapping.prop??)>${mapping.prop.comment}</#if>
      */
   <#if (mapping.mappingType == 2)>
-    @OneToMany(mappedBy = "${toLowerFirst(mapping.masterClass)}")
+    @OneToMany(mappedBy = "${toLowerFirst(entity.entityName)}")
     private List<${mapping.slaveClass}Entity> ${toLowerFirst(mapping.slaveClass)}s;
   <#elseif (mapping.mappingType == 3)>
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
@@ -111,14 +115,13 @@ public class ${entity.entityName}Entity implements Serializable {
 </#if>
 <#list entity.propList as prop>
   <#if (prop.name == "createId" || prop.name == "updateId")>
-    public void set${toUpperFirst(prop.name)} (UserEntity ${prop.name}) {
+    public void set${toUpperFirst(prop.name)} (EnterprisePersonnelEntity ${prop.name}) {
         this.${prop.name} = ${prop.name};
     }
 
-    public UserEntity get${toUpperFirst(prop.name)}() {
+    public EnterprisePersonnelEntity get${toUpperFirst(prop.name)}() {
         return ${prop.name};
     }
-
   <#else>
     public void set${toUpperFirst(prop.name)} (${prop.typeName} ${prop.name}) {
         this.${prop.name} = ${prop.name};
@@ -164,6 +167,16 @@ public class ${entity.entityName}Entity implements Serializable {
 </#list>
      
 /*
+    public ${entity.entityName}View toView() {
+        ${entity.entityName}View v = new ${entity.entityName}View();
+<#list entity.propList as prop>
+  <#if (prop.name != "createId" && prop.name != "updateId")>
+        v.set${toUpperFirst(prop.name)}(this.get${toUpperFirst(prop.name)}());
+  </#if>
+</#list>
+        return v;
+    }
+
     public void setView(${entity.entityName}View view) {
 <#list entity.propList as prop>
   <#if (prop.name != "createId" && prop.name != "updateId")>

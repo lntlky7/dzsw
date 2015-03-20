@@ -1,17 +1,19 @@
-package ${entity.packagePrefix}.view;
+<#--package ${entity.packagePrefix}.view;-->
+package com.rgsc.common.protocol.view;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import ${entity.packagePrefix}.view.UserView;
+<#--import ${entity.packagePrefix}.view.UserView;
+//import ${entity.packagePrefix}.entity.${entity.entityName}Entity;-->
 <#list entity.entityMappingList as mapping>
     <#if (mapping.mappingType == 2)>
-import ${entity.packagePrefix}.entity.${mapping.slaveClass}View;
+import com.rgsc.common.protocol.view.${mapping.slaveClass}View;
     <#elseif (mapping.mappingType == 3)>
-import ${entity.packagePrefix}.entity.${mapping.masterClass}View;
+import com.rgsc.common.protocol.view.${mapping.masterClass}View;
     <#elseif (mapping.mappingType == 4)>
-import ${entity.packagePrefix}.entity.${mapping.slaveClass}View;
+import com.rgsc.common.protocol.view.${mapping.slaveClass}View;
     </#if>
 </#list>
 
@@ -28,7 +30,7 @@ public class ${entity.entityName}View implements Serializable {
 <#elseif (entity.entityId.entityIdList?size == 1)>
     <#assign eid=entity.entityId.entityIdList[0] />
     /**
-     * <#if (eid.prop??)>${eid.prop.comment}</#if>
+     * <#if (eid??)>${eid.comment}</#if>
      */
     private ${eid.typeName} ${eid.name};
 </#if>
@@ -38,9 +40,9 @@ public class ${entity.entityName}View implements Serializable {
      * ${prop.comment}
      */
   <#if (prop.name == "createId")>
-    private UserEntity creater;
+    <#--private UserEntity creater;-->
   <#elseif (prop.name == "updateId")>
-    private UserEntity updater;
+    <#--private UserEntity updater;-->
   <#else>
     private ${prop.typeName} ${prop.name};
   </#if>
@@ -62,7 +64,7 @@ public class ${entity.entityName}View implements Serializable {
     public ${entity.entityName}View() {
 
     }
-
+<#--
     public ${entity.entityName}View(${entity.entityName}Entity entity) {
 <#list entity.propList as prop>
   <#if (prop.name != "createId" && prop.name != "updateId")>
@@ -70,7 +72,7 @@ public class ${entity.entityName}View implements Serializable {
   </#if>
 </#list>
     }
-
+-->
 <#if (entity.entityId.entityIdList?size > 1)>
 <#elseif (entity.entityId.entityIdList?size == 1)>
   <#list entity.entityId.entityIdList as eid>
@@ -86,6 +88,7 @@ public class ${entity.entityName}View implements Serializable {
 </#if>
 <#list entity.propList as prop>
   <#if (prop.name == "createId")>
+<#--
     public void set${toUpperFirst(prop.name)} (UserView creater) {
         this.creater = ${prop.name};
     }
@@ -93,8 +96,9 @@ public class ${entity.entityName}View implements Serializable {
     public UserEntity get${toUpperFirst(prop.name)}() {
         return creater;
     }
-
+-->
   <#elseif (prop.name == "updateId")>
+<#--
     public void set${toUpperFirst(prop.name)} (UserView updater) {
         this.updater = updater;
     }
@@ -102,7 +106,7 @@ public class ${entity.entityName}View implements Serializable {
     public UserEntity get${toUpperFirst(prop.name)}() {
         return updater;
     }
-
+-->
   <#else>
     public void set${toUpperFirst(prop.name)} (${prop.typeName} ${prop.name}) {
         this.${prop.name} = ${prop.name};

@@ -68,7 +68,7 @@ public class SimpleTransformStrategy implements ITable2EntityStrategy {
         if (pk.isReferenced()) {
             mapping = new EntityMapping();
             mapping.setProp(prop);
-            Table slaveTable = tableMap.get(pk.getSlaveTable());
+            Table slaveTable = tableMap.get(pk.getSlaveTable().toUpperCase());
             if (slaveTable.isMidTable()) {// many to many
                 mapping.setMappingType(Entity.MAPPING_MANY_TO_MANY);
                 ForeignKey otherFK = null;
@@ -86,6 +86,7 @@ public class SimpleTransformStrategy implements ITable2EntityStrategy {
                 }
             } else {// one to many
                 mapping.setMappingType(Entity.MAPPING_ONE_TO_MANY);
+                mapping.setMasterClass(null);
                 mapping.setSlaveClass(formatClassName(pk.getSlaveTable(), "_"));
                 mapping.setSlaveTable(pk.getSlaveTable());
                 mapping.setJoinColumns(pk.getFkName());

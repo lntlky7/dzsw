@@ -2,6 +2,7 @@ package ${entity.packagePrefix}.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ${entity.packagePrefix}.entity.${entity.entityName}Entity;
 import ${entity.packagePrefix}.dao.I${entity.entityName}Dao;
 import ${entity.packagePrefix}.view.${entity.entityName}View;
+import com.rgsc.web.common.Pages;
 
 /**
  * Description ${entity.comment}
  * CreateDate ${entity.createTime}
  * @author ${entity.author}
  */
-@Service("${entity.entityName}Service")
+@Service("${toLowerFirst(entity.entityName)}Service")
 public class ${entity.entityName}ServiceImpl implements I${entity.entityName}Service {
 
     @Autowired
@@ -34,7 +36,7 @@ public class ${entity.entityName}ServiceImpl implements I${entity.entityName}Ser
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
     @Override
     public ${entity.entityName}View update(${entity.entityName}View view) {
-        ${entity.entityName}Entity entity = ${toLowerFirst(entity.entityName)}Dao.get${entity.entityName}EntityById(view.getId());
+        ${entity.entityName}Entity entity = ${toLowerFirst(entity.entityName)}Dao.get${toUpperFirst(entity.entityName)}EntityById(view.getId());
 
         return new ${entity.entityName}View(entity);
     }
@@ -42,7 +44,7 @@ public class ${entity.entityName}ServiceImpl implements I${entity.entityName}Ser
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
     @Override
     public ${entity.entityName}View saveOrUpdate(${entity.entityName}View view) {
-        ${entity.entityName}Entity entity = ${toLowerFirst(entity.entityName)}Dao.get${entity.entityName}EntityById(view.getId());
+        ${entity.entityName}Entity entity = ${toLowerFirst(entity.entityName)}Dao.get${toUpperFirst(entity.entityName)}EntityById(view.getId());
 
         return new ${entity.entityName}View(entity);
     }
@@ -50,23 +52,18 @@ public class ${entity.entityName}ServiceImpl implements I${entity.entityName}Ser
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
     @Override
     public void remove(Serializable id) {
-        ${entity.entityName}Entity entity = this.${toLowerFirst(entity.entityName)}Dao.get${entity.entityName}EntityById(id);
-        entity.setValidFlag(0);
-        LogCache.getInstance().clear();
-        LogCache.getInstance().putTableName(${entity.entityName}Entity.TABLE_NAME);
-        LogCache.getInstance().putPrimaryKey(${entity.entityName}Entity.TABLE_NAME, entity.get${entity.entityName}Id());
+        ${entity.entityName}Entity entity = this.${toLowerFirst(entity.entityName)}Dao.get${toUpperFirst(entity.entityName)}EntityById(id);
+        
         this.${toLowerFirst(entity.entityName)}Dao.update(entity);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
     @Override
     public void removeByIds(Serializable[] ids) {
-        LogCache.getInstance().putTableName(RoleEntity.TABLE_NAME);
         for (Serializable id : ids) {
-            ${entity.entityName}Entity entity = this.${toLowerFirst(entity.entityName)}Dao.get${entity.entityName}EntityById(id);
-            entity.setValidFlag(0);
+            ${entity.entityName}Entity entity = this.${toLowerFirst(entity.entityName)}Dao.get${toUpperFirst(entity.entityName)}EntityById(id);
+            
             this.${toLowerFirst(entity.entityName)}Dao.update(entity);
-            LogCache.getInstance().putPrimaryKey(${entity.entityName}Entity.TABLE_NAME, id);
         }
     }
 
@@ -74,11 +71,11 @@ public class ${entity.entityName}ServiceImpl implements I${entity.entityName}Ser
     @Override
     public Pages find${entity.entityName}List(Pages pages) {
         if (pages.getTotalCount() == -1) {
-            pages.setTotalCount(this.${toLowerFirst(entity.entityName)}Dao.getEntityPagingCount());
+            pages.setTotalCount(this.${toLowerFirst(entity.entityName)}Dao.get${toUpperFirst(entity.entityName)}EntityPagingCount());
         }
         pages.executeCount();
         List<${entity.entityName}View> viewList = new ArrayList<${entity.entityName}View>();
-        List<${entity.entityName}Entity> entityList = this.${toLowerFirst(entity.entityName)}Dao.get${entity.entityName}EntityPaging(pages.getStartRecord(), pages.getPageSize());
+        List<${entity.entityName}Entity> entityList = this.${toLowerFirst(entity.entityName)}Dao.get${toUpperFirst(entity.entityName)}EntityPaging(pages.getStartRecord(), pages.getPageSize());
         for (${entity.entityName}Entity entity : entityList) {
             ${entity.entityName}View view = new ${entity.entityName}View(entity);
             viewList.add(view);

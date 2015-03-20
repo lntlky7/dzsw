@@ -5,6 +5,7 @@
  */
 package com.dz.jpa.reader.impl;
 
+import com.dz.jpa.bean.table.PrimaryKey;
 import com.dz.jpa.bean.table.Table;
 import java.sql.ResultSet;
 import com.dz.jpa.db.JdbcDb;
@@ -14,6 +15,7 @@ import com.dz.jpa.reader.IPKReader;
 import com.dz.jpa.reader.ITableReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,17 +32,46 @@ public class MySqlTableReader implements ITableReader {
         DatabaseMetaData metaData = conn.getMetaData();
         String schema = JdbcDb.getInstance().getSchema();
         String tableNamePattern = JdbcDb.getInstance().getTableNamePattern();
-        ResultSet rs = metaData.getTables(conn.getCatalog(), schema, tableNamePattern, new String[]{"TABLE"});
+        // 查询数据库下所有表
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        try {
+            String sqlTables = "SELECT TABLE_NAME,TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = ?";
+            pstmt = conn.prepareStatement(sqlTables);
+            pstmt.setString(1, "bluedb");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Table t = new Table();
+                t.setTableName(rs.getString("TABLE_NAME").toUpperCase());
+                t.setComment(rs.getString("TABLE_COMMENT"));
+                map.put(t.getTableName(), t);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        }
+        rs = metaData.getTables(conn.getCatalog(), schema, tableNamePattern, new String[]{"TABLE"});
         while (rs.next()) {
-            Table t = new Table();
-            t.setTableName(rs.getString("TABLE_NAME"));
-            t.setComment(rs.getString("REMARKS"));
+            Table t = map.get(rs.getString("TABLE_NAME").toUpperCase());
+//            Table t = new Table();
+//            t.setTableName(rs.getString("TABLE_NAME").toUpperCase());
+//            t.setComment(rs.getString("REMARKS"));
             // read column
             IColumnReader columnReader = new MySqlColumnReader();
             t.setColumnMap(columnReader.readTableColumn(schema, t.getTableName()));
             // read pk
             IPKReader pkReader = new MySqlPKReader();
-            t.setPrimaryKeyMap(pkReader.readTablePK(schema, t.getTableName()));
+            Map<String, PrimaryKey> pkMap = pkReader.readTablePK(schema, t.getTableName());
+            if (pkMap == null) {
+                System.out.println(t.getTableName());
+            }
+            t.setPrimaryKeyMap(pkMap);
             // read fk
             IFKReader fkReader = new MySqlFKReader();
             t.setForeignKeyMap(fkReader.readTableFK(schema, t.getTableName()));
@@ -50,7 +81,7 @@ public class MySqlTableReader implements ITableReader {
             } else {
                 t.setMidTable(false);
             }
-            map.put(t.getTableName(), t);
+            //map.put(t.getTableName(), t);
         }
         return map;
     }
